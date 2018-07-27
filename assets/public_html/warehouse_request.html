@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Find a warehouse</title>
+  </head>
+  <body>
+    <h3>Find a warehouse</h3>
+    <u><strong>Enter your search parameters</strong></u>
+    <form action="/get_warehouse" method="get">
+        <div class="form-input-group">
+            <label for="size">Size(sqm): </label>
+            <input type="number" name="wqs">
+        </div>
+        <div class="form-input-group">
+            <label for="start">Starting period: </label>
+            <input type="date" name="wqsp">
+        </div>
+        <div class="form-input-group">
+            <!-- <label for="size">Type of goods: </label> -->
+            <select>
+              <option for="type">Type of goods</option>
+              <option for="electronics">Electronics</option>
+              <option for="cereals">Cereals</option>
+            </select>
+        </div>
+        <div class="form-input-group">
+            <label for="size">Amount(tonnes): </label>
+            <input type="number" name="wqa">
+        </div>
+        <div class="form-input-group">
+            <label for="size">Size(sqm): </label>
+            <input type="number" name="wqs">
+        </div>
+        <div class="form-input-group">
+            <label for="size">Location: </label>
+            <input type="text" name="wqs">
+        </div>
+        <div class="form-input-group">
+            <label for="size">Additional specification: </label>
+            <textarea name="wrspecs" rows="3" cols="10"></textarea>
+        </div>
+
+        <div class="form-input-submit">
+          <button type="submit">Search </button>
+        </div>
+    </form>
+  </body>
+</html>
