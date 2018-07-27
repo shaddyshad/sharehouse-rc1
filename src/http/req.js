@@ -15,10 +15,9 @@ let tuff_feature = class {  //represents a tuuf_feature entry used in geo-sparti
 
 //wh_request - to represent a warehouse request
 let wh_request = class{
-  constructor(sz, type, loc, sd, mop, add){
+  constructor(sz, type, sd, mop, add){
     this.size = sz;
     this.type = type;
-    this.loc = loc;
     this.starting_date = sd;
     this.mop = mop;
     this.add_spec = add;
