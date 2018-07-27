@@ -39,6 +39,11 @@ const client_dir = __dirname+'/assets/public_html';
 app.get('/request_wh', function(req, res){
   //first, serve the warehouse_request.html page
   res.sendFile('warehouse_request.html', {root: client_dir});
+});
+
+app.post('/request_wh', function(req, res){
+  //somebody is looking for a warehouse
+  
 })
 
 //
