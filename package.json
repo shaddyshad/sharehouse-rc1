@@ -1,0 +1,22 @@
+{
+  "name": "sharehouse",
+  "version": "1.0.0",
+  "description": "Sharehouse backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shaddyshad/sharehouse.git"
+  },
+  "author": "shad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shaddyshad/sharehouse/issues"
+  },
+  "homepage": "https://github.com/shaddyshad/sharehouse#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
