@@ -18,6 +18,7 @@
   "homepage": "https://github.com/shaddyshad/sharehouse#readme",
   "dependencies": {
     "express": "^4.16.3",
-    "mongodb": "^3.1.1"
+    "mongodb": "^3.1.1",
+    "turf": "^3.0.14"
   }
 }
