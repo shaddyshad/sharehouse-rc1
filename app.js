@@ -3,9 +3,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+
+//Database connection
+const db_uri = "mongodb://sharehouse:Share1nsecurePWD@ds257851.mlab.com:57851/sharehouse";
+var mongoose_options = {
+	useNewUrlParser: true,
+};
+
+mongoose.connect(db_uri, mongoose_options)
+.then(function(conn){
+	exports.db_connection=conn
+;})
+.catch(function(err){
+	console.error("Could not establish connection");
+	process.exit(1);
+});
 
 var app = express();
 
@@ -38,4 +54,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+exports.app = app;
+
+//module.exports = app;
