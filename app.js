@@ -60,13 +60,40 @@ var GoodsSchema = new Schema({
   period: {type: Number, min: 1}
 });
 
+var BillingSchema = new Schema({
+  depositor: Schema.Types.ObjectId,
+  goods: [Schema.Types.ObjectId],
+  warehouse: Schema.Types.ObjectId,
+  operator: Schema.Types.ObjectId,
+  bill: {type: Number, min: 0},
+  status: {type: String, enum:['complete', 'pending']}
+});
+
 //compile all the schemas
 var Depositor = mongoose.model('Depositor', DepositorSchema);
 var WHOperator = mongoose.model('WHOperator', WHOperatorSchema);
 var Warehouse = mongoose.model('Warehouse', WarehouseSchema);
 var Goods = mongoose.model('Goods', GoodsSchema);
+var Billing = mongoose.model('Billing', BillingSchema);
 //end compilation
 //END Data schema definitions
+
+app.get('/billing', function(req, res){
+  var dep = new Depositor({first_name: 'Shad', last_name: 'Shaddy', password: 'PWD', email: 'EMAIl'});
+  var wh = new Warehouse({name: "Tema", location: {type:"Point", coordinates: [12.12, 13.45]},total_size: 1000, available: 200});
+  var op = new WHOperator({first_name: "Op", last_name:"Op2", email: "Email"});
+  var goods = new Goods({name: "Goods1", depositor: dep, type: "Electronics", warehouse: wh, period: 2});
+
+  var bill = new Billing({depositor: dep, goods: [goods], bill: 1000, operator: op, warehouse: wh, status: "pending"});
+
+  bill.save(function(err){
+    if(err){
+      console.log(err);
+      res.send("Error billing.");
+    }
+    res.send("Bill added");
+  })
+})
 
 app.get('/depositor', function(req, res){
   //create a depositor instance and save it
