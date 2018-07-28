@@ -3,11 +3,16 @@ let express = require('express');
 let mongoose = require('mongoose');
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
+let bodyParser = require('body-parser');
+let crypto = require('crypto');
+let bcrypt = require('bcrypt');
 
 //depositor ops
 let dp_ops = require('./src/users/depositors.js');
 
 let app = express();
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 //some global variables definitions
 const client_dir = __dirname+'/assets/public_html';
@@ -31,7 +36,9 @@ var DepositorSchema = new Schema({
   last_name: {type: String, trim: true, required: true},
   email: String,
   password: String,
-  creation_date: { type: Date, default: Date.now }
+  phone_number: String,
+  creation_date: { type: Date, default: Date.now },
+  verified: {type: String, enum:["verified", "unverified"]}
 });
 
 var WHOperatorSchema = new Schema({
@@ -78,7 +85,7 @@ var Billing = mongoose.model('Billing', BillingSchema);
 //end compilation
 //END Data schema definitions
 
-app.get('/billing', function(req, res){
+app.post('/billing', function(req, res){
   var dep = new Depositor({first_name: 'Shad', last_name: 'Shaddy', password: 'PWD', email: 'EMAIl'});
   var wh = new Warehouse({name: "Tema", location: {type:"Point", coordinates: [12.12, 13.45]},total_size: 1000, available: 200});
   var op = new WHOperator({first_name: "Op", last_name:"Op2", email: "Email"});
@@ -95,25 +102,71 @@ app.get('/billing', function(req, res){
   })
 })
 
-app.get('/depositor', function(req, res){
-  //create a depositor instance and save it
-  var depositor = new Depositor({first_name: 'Shad', last_name: 'Shaddy', password: 'PWD', email: 'EMAIl'});
+//Depositor signup
+//A get request to the depositor endpoint signifies that the client
+//is trying to fetch thee depositor signup form. Mostly for backend testing
+// as the frontend will already have the form at hand.
+app.get('/depositor', dp_ops.get_form);
 
-  //save the instance, passing a callback
-  depositor.save(function(err){
-    if(err){
-      console.log(err);
-      //TODO error and retry receiving the form
-      res.send("Could not save to DB");
-    }
-    //TODO Succesfully added a depositor, do the next thing
-    res.send("Record saved to DB");
-  })
+app.post('/depositor', function(req, res){
+  console.log("Signing a depositor up.");
+  console.log("Avaiable data: ", req.body);
+  //extract the data and create a depositor object
+  //Basic validation rules handled by a simple state machine
+  /*
+  * Email cannot be empty
+  * Email must be unique
+  * Password cannot be empty
+  */
+  let email = req.body.email;
+  let password = req.body.password;
+
+  // console.log("Email: ", email, "Pasword: ", password);
+
+  if(!email || !password){
+    //NULL_EMAIL_OR_PASSWORD state
+    res.json({status: 400, message: "Empty email or password field."});
+    // res.status(400).send("Check your email or password.");
+  }else{
+    //email should be unique
+    Depositor.findOne({'email':email}, function(err, depositor){
+      if(err) throw err;
+      //No err, check for depositor
+      if(depositor){
+        //RECORD_EXIST state
+        // res.status(409).send("Record exists. Do you want to login or remember password.");
+        res.json({status: 409, message: "Record with the same email exists."});
+        // return;
+      }else{
+        console.log("Creating a new record.");
+        bcrypt.hash(password, 10, function(err, hash){
+          if(err) throw err;
+          //Already hashed
+          var depositor = new Depositor({
+              first_name: req.body.first_name,
+              last_name: req.body.last_name,
+              email: email,
+              password: hash,
+              state: "unverified"
+          });
+          depositor.save(function(err){
+            if(err) throw err;
+            //EMAIL_CONFIRMATION_STATE
+            res.json({status: 200, message: "Record added, waiting email confirmation."});
+            // res.send("Waiting email confirmation");
+          });
+        });
+      }
+
+    });
+
+
+  }
 });
 
 app.get('/warehouse', function(req, res){
   //create a warehouse
-  var warehouse = new Warehouse({name: "Tema", location: {type:"Point", coordinates: [12.12, 13.45]},total_size: 1000, available: 200});
+  var warehouse = new Wgetarehouse({name: "Tema", location: {type:"Point", coordinates: [12.12, 13.45]},total_size: 1000, available: 200});
 
   warehouse.save(function(err){
     if(err){

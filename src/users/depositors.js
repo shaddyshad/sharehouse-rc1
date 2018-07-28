@@ -9,3 +9,8 @@ exports.dp_signup = function(req, res){
   res.send("Form data received");
   console.log(form);
 }
+
+exports.get_form = function(req, res){
+  //Get request, return the form
+  res.sendFile('depositor.html', {root:__dirname+'../../../assets/public_html'});
+}
