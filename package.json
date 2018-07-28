@@ -1,31 +1,16 @@
 {
   "name": "sharehouse",
-  "version": "1.0.0",
-  "description": "Sharehouse backend",
-  "main": "app.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shaddyshad/sharehouse.git"
-  },
-  "author": "shad",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/shaddyshad/sharehouse/issues"
-  },
-  "homepage": "https://github.com/shaddyshad/sharehouse#readme",
   "dependencies": {
-    "bcrypt": "^3.0.0",
-    "body-parser": "^1.18.3",
-    "crypto": "^1.0.1",
-    "express": "^4.16.3",
-    "mongodb": "^3.1.1",
-    "mongoose": "^5.2.5",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "turf": "^3.0.14"
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0"
   }
 }
