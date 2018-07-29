@@ -36,3 +36,21 @@ This API might fail due to connection errors, as such, the API depends on the bu
 Contains definitions for services relating to creation and manipulation of warehouse, listing, and all queries on the warehouse data store.
 
 A warehouse is a central data object in sharehouse and the whole business is built around finding best fit for a search form. The location queries and posting impose the greatest business logic on the MVP.
+
+#### API endpoints
+
+*get('/warehouses')*
+
+__parameters__
+
+* None
+
+__Returns__
+
+A list of available warehouses.
+
+When no warehouse exist, the API potentially returns an empty queryset.
+
+__Errors__
+
+Like all GET API's that get data from the database, database connection errors might affect the connection after which the client is notified with a json response with the error status code set and the appropriate error message set.
