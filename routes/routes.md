@@ -15,13 +15,15 @@ For most listing services, they can be accessed via a `GET` request to the endpo
 #### API endpoints
 *get('/users')*   
 __parameters__
-* <<None>>
+* (<<None>>)[]
 
 __Returns__
 * [users] - A json compliant users objects is returned, potentially null, containing all the users currently in the DB.   
 
-Returns a list of all users.    
+Returns a list of all users.  
+
 When no user exist in the DB, the API returns an empty JSON object, else, returns a list of valid `User` instances.
 
-__Errors__
+__Errors__   
+
 This API might fail due to connection errors, as such, the API depends on the built in Promise object to handle the errors. If an error happens, the API returns a json document with the status set to `error` and the appropriate `error message` set.
