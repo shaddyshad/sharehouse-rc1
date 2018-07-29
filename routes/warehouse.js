@@ -22,10 +22,35 @@ mongoose.connect(db_uri, db_options)
 	 process.exit(1);
  });
 
+
+ var _schemaOptions = {
+   typeKey: '$type',
+   timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
+   collection: 'warehouse'
+ }
+
+ var _schema = {
+   location :{
+     type: String,
+     coordinates:[Number]
+   },
+ }
+
+var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
+
+var warehouse = mongoose.model('warehouse', warehouseSchema);
+
 //APIs
 //GET a list of all warehouses
 router.get('/', function(req, res, next){
-  res.send("Reply with a resource.");
+  var _warehouse = warehouse.find({});
+  _warehouse.then(function(warehouse){
+    res.json(JSON.stringify(warehouse));
+  })
+  .catch(function(_err){
+    console.error("Error getting warehouse ", _err);
+    res.json({"status":"error", "message":"Error fetching warehouses"});
+  })
 });
 
 
