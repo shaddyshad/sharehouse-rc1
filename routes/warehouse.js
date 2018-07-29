@@ -53,5 +53,12 @@ router.get('/', function(req, res, next){
   })
 });
 
+router.post('/', function(req, res, next){
+  var warehouseForm = req.body;
+  //Assume warehouse has the appropriate data FIXME
+  console.log(warehouseForm);
+  res.json({"status": "success", "message": "Warehouse added."});
+})
+
 
 module.exports = router;
