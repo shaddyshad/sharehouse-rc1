@@ -9,13 +9,15 @@ Something important to know is the protocol used by the services provided here.
 This is a standard I adapted just for the MVP, maybe after a few iterations, we'll get better.
 
 ### Files    
-`users.js` - Contains definitions of services regarding the manipulation of users to client. Mainly, it is heavily depended on by services like login, signup among other that rely on user data existence.   
+*`users.js`*
+
+ - Contains definitions of services regarding the manipulation of users to client. Mainly, it is heavily depended on by services like login, signup among other that rely on user data existence.   
 For most listing services, they can be accessed via a `GET` request to the endpoint, but still requires to be a validated request. The system uses a very simple state machine to determine if a request is authenticated and authorized to access the data, and if not, returns an error message.
 
 #### API endpoints
 *get('/users')*   
 __parameters__
-* (<<None>>)[]
+* (<None>)[]
 
 __Returns__
 * [users] - A json compliant users objects is returned, potentially null, containing all the users currently in the DB.   
@@ -27,3 +29,10 @@ When no user exist in the DB, the API returns an empty JSON object, else, return
 __Errors__   
 
 This API might fail due to connection errors, as such, the API depends on the built in Promise object to handle the errors. If an error happens, the API returns a json document with the status set to `error` and the appropriate `error message` set.
+
+
+*`warehouse.js`*
+
+Contains definitions for services relating to creation and manipulation of warehouse, listing, and all queries on the warehouse data store.
+
+A warehouse is a central data object in sharehouse and the whole business is built around finding best fit for a search form. The location queries and posting impose the greatest business logic on the MVP.
