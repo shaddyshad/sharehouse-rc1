@@ -47,6 +47,7 @@ router.get('/', function(req, res, next) {
 /*POST a user to the database*/
 router.post('/', function(req, res, next){
 	var _userForm = req.body;
+	//TODO insert form verification here 
 	var userType = _userForm.user_type;
 	var _type = userType == "operator"?true:false;
 	var _user = Users.create({username: req.body.username, password: req.body.password, user_type: _type});
