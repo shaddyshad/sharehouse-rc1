@@ -35,7 +35,7 @@ var Users = mongoose.model('users', UserSchema);
 router.get('/', function(req, res, next) {
 	Users.find({})
 	.then(function(users){
-			let _users = JSON.stringify(users);
+			var _users = JSON.stringify(users);
 			res.json(_users);
 	})
 	.catch(function(err){
@@ -58,6 +58,24 @@ router.post('/', function(req, res, next){
 		res.json({"status":"1", "message": "Failed to add object to the db."});
 	});
 })
+
+/*GET a specific user*/
+router.get('/:username', function(req, res, next){
+	var _username = req.param.username;
+	if(!_username){
+		res.json({"status":"error", "message":"No supplied argument"});
+	}
+	Users.findOne({username: _username}, function(err, user){
+		if(err){
+			console.log("Error get username: ", err);
+			res.json({"status":"error", "message":"No record found"});
+		}
+		var _user = JSON.stringify(user);
+		res.json(_user);
+	});
+})
+
+
 
 
 module.exports = router;
