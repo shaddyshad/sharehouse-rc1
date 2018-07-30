@@ -9,15 +9,16 @@ mongoose.connection = connection;
 
  var _schemaOptions = {
    typeKey: '$type',
-   timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
-   collection: 'warehouses'
+   // timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
+   collection: 'entries'
  }
 
  var _schema = {
    location :{
      type: String,
-     coordinates:[Number]
+     coordinates:[]
    },
+   name: {'$type': String}
  }
 
 var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
@@ -29,7 +30,7 @@ var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
 
 
 //Compiled model
-var Warehouse = mongoose.model('warehouses', warehouseSchema);
+var Warehouse = mongoose.model('entries', warehouseSchema);
 
 
 
@@ -48,12 +49,6 @@ router.get('/', function(req, res, next){
   })
 });
 
-router.get("/search/:location", function(req, res, next){
-  let loc = String(req.params.location);
-  let warehouse = get_all_in_range(loc);
-
-  res.json(warehouse);
-})
 
 router.post('/', function(req, res, next){
   //TODO add authorization checks
@@ -107,9 +102,34 @@ function normalizeLocation(loc, sep){
   return ret;
 }
 
-//Get all warehouses in the range 5KM from point loc
-function get_all_in_range(loc){
-  const allowed_range = 5000; //5 km
+// //Get all warehouses in the range 5KM from point loc
+// function get_all_in_range(loc){
+//   const allowed_range = 500000; //5 km
+//   //prepare the location
+//   var sep = has_sep_comma(loc) ? ",":" ";
+//   var _loc = normalizeLocation(loc, sep);
+//   var _compareLoc = {
+//     type: "Point",
+//     coordinates: _loc
+//   };
+//   // console.log("BIIIIIIIG ",_compareLoc);
+//
+//   Warehouse.find()
+//     .where('location')
+//     .near({
+//       center: _compareLoc,
+//       maxDistance: allowed_range,
+//       spherical: true
+//     }).then(function(records){
+//       return records;
+//     }).catch(function(err){
+//       throw err;
+//     });
+// }
+
+router.get("/search", function(req, res, next){
+  let loc = String(req.query.location);
+  const allowed_range = 500000; //5 km
   //prepare the location
   var sep = has_sep_comma(loc) ? ",":" ";
   var _loc = normalizeLocation(loc, sep);
@@ -117,22 +137,21 @@ function get_all_in_range(loc){
     type: "Point",
     coordinates: _loc
   };
+  // console.log("BIIIIIIIG ",_compareLoc);
+  Warehouse.find()
+    .where('location')
+    .near({
+      center: _compareLoc,
+      maxDistance: allowed_range,
+      spherical: true
+    }).then(function(records){
+      res.json(JSON.stringify(records));
+    }).catch(function(err){
+      throw err;
+      res.sendStatus(300);
+    });
 
-  let _query = Warehouse.find({
-    location: {
-      $near: {
-        $geometry: _compareLoc,
-        $maxDistance: allowed_range
-      }
-    }
-  });
-  _query.then(function(records) {
-    return JSON.stringify(records);
-  }).catch(function(err){
-    console.error("[Get all in range]: ", err);
-    return {"status":"error", "message": "Something went wrong"};
-  });
-}
+});
 
 
 
