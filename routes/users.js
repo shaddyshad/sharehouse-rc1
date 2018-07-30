@@ -1,21 +1,10 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var connection = require('./database.js');
 
 var router = express.Router();
 
-var db;
-var db_uri = "mongodb://sharehouse:Share1nsecurePWD@ds257851.mlab.com:57851/sharehouse";
-var db_options = {
-	useNewUrlParser: true
-};
-mongoose.connect(db_uri, db_options)
-.then(function(_db){
-	db = _db;
-})
-.catch(function(_err){
-	console.error("[Users] - Connection failure ",_err);
-	 process.exit(1);
- });
+mongoose.connection = connection;
 
 var userSchemaOptions = {
 	collection: "users",
@@ -47,7 +36,7 @@ router.get('/', function(req, res, next) {
 /*POST a user to the database*/
 router.post('/', function(req, res, next){
 	var _userForm = req.body;
-	//TODO insert form verification here 
+	//TODO insert form verification here
 	var userType = _userForm.user_type;
 	var _type = userType == "operator"?true:false;
 	var _user = Users.create({username: req.body.username, password: req.body.password, user_type: _type});
