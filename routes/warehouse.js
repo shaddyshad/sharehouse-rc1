@@ -10,7 +10,7 @@ mongoose.connection = connection;
  var _schemaOptions = {
    typeKey: '$type',
    timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
-   collection: 'warehouse'
+   collection: 'warehouses'
  }
 
  var _schema = {
@@ -27,8 +27,11 @@ var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
 */
 
 
+
 //Compiled model
-var Warehouse = mongoose.model('warehouse', warehouseSchema);
+var Warehouse = mongoose.model('warehouses', warehouseSchema);
+
+
 
 //APIs
 //GET a list of all warehouses
@@ -44,27 +47,13 @@ router.get('/', function(req, res, next){
     res.json({"status":"error", "message":"Error fetching warehouses"});
   })
 });
-//Determine what type of separator that the location data has
-function has_sep_comma(loc){
-  if(!loc){
-    return null;
-  }
-  return (loc.match(",") !== null);
-}
 
-//Normalize location.
-//Assume the location in an arr or a string of values, return a parsed array of values
-function normalizeLocation(loc, sep){
-  let ret = Array();
-  //let _sep = has_sep_comma(loc) ? "," : " ";  //assume default to be whitespace
-  let _loc = loc.split(sep);
-  _loc.forEach(l => {
-    l = l.trim();
-    console.log(l);
-    ret.push(parseFloat(l));
-  });
-  return ret;
-}
+router.get("/search/:location", function(req, res, next){
+  let loc = String(req.params.location);
+  let warehouse = get_all_in_range(loc);
+
+  res.json(warehouse);
+})
 
 router.post('/', function(req, res, next){
   //TODO add authorization checks
@@ -96,18 +85,55 @@ router.post('/', function(req, res, next){
   });
 });
 
-router.get('/search/', function(req, res, next){
-  //Invoked when search by location occurs
-  var loc = String(req.query.location);
-  let sep = has_sep_comma(loc) ? "," : " ";
-  loc = normalizeLocation(loc, sep);
+//Determine what type of separator that the location data has
+function has_sep_comma(loc){
+  if(!loc){
+    return null;
+  }
+  return (loc.match(",") !== null);
+}
+
+//Normalize location.
+//Assume the location in an arr or a string of values, return a parsed array of values
+function normalizeLocation(loc, sep){
+  let ret = Array();
+  //let _sep = has_sep_comma(loc) ? "," : " ";  //assume default to be whitespace
+  let _loc = loc.split(sep);
+  _loc.forEach(l => {
+    l = l.trim();
+    console.log(l);
+    ret.push(parseFloat(l));
+  });
+  return ret;
+}
+
+//Get all warehouses in the range 5KM from point loc
+function get_all_in_range(loc){
+  const allowed_range = 5000; //5 km
+  //prepare the location
+  var sep = has_sep_comma(loc) ? ",":" ";
+  var _loc = normalizeLocation(loc, sep);
   var _compareLoc = {
     type: "Point",
-    coordinates: loc,
+    coordinates: _loc
   };
-  let _queryAll = Warehouse.find({});
-  res.send("Working on it.");
-})
+
+  let _query = Warehouse.find({
+    location: {
+      $near: {
+        $geometry: _compareLoc,
+        $maxDistance: allowed_range
+      }
+    }
+  });
+  _query.then(function(records) {
+    return JSON.stringify(records);
+  }).catch(function(err){
+    console.error("[Get all in range]: ", err);
+    return {"status":"error", "message": "Something went wrong"};
+  });
+}
+
 
 
 module.exports = router;
