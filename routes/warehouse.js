@@ -1,27 +1,11 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var connection = require('./database.js')
 
 var router = express.Router();
 
 //Database setup
-/*
-* The module opens a connection with the database server at the warehouse db collection
-*/
-var db;
-var db_uri = "mongodb://sharehouse:Share1nsecurePWD@ds257851.mlab.com:57851/sharehouse";
-var db_options = {
-	useNewUrlParser: true
-};
-
-mongoose.connect(db_uri, db_options)
-.then(function(_db){
-	db = _db;
-})
-.catch(function(_err){
-	console.error("[Users] - Connection failure ",_err);
-	 process.exit(1);
- });
-
+mongoose.connection = connection;
 
  var _schemaOptions = {
    typeKey: '$type',
@@ -37,12 +21,20 @@ mongoose.connect(db_uri, db_options)
  }
 
 var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
+/*Including distance in the query select fields using a virtual field.
+  We don't want the distance to show, since it's a relative measure and there is not any absolute point of reference we can use, but distance plays a critical
+  business role when it comes to finding warehouse. Ordering the output of the query by distance, makes perfect business sense.
 
+*/
+
+//Compiled model
 var Warehouse = mongoose.model('warehouse', warehouseSchema);
 
 //APIs
 //GET a list of all warehouses
 router.get('/', function(req, res, next){
+  //TODO add authorization checks
+  //Restrict to !user.user_type and redirect to dashboard if user.user_type
   var _warehouse = Warehouse.find({});
   _warehouse.then(function(warehouse){
     res.json(JSON.stringify(warehouse));
@@ -54,11 +46,20 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/', function(req, res, next){
+  //TODO add authorization checks
+
   var warehouseForm = req.body;
   //Assume warehouse has the appropriate data FIXME
-  var _warehouseLocation = warehouseForm.location; //long, lat array
+  //Look for location key in the form
+  if(!warehouse.has_key('location'){ //FIXME implement has_key
+    res.json("status":"error", "message":"Expected location");
+  })
+  var _warehouseLocation = warehouseForm.location; //ignore all other fields
   //Array.prototype.slice()
-  _warehouseLocation = Array.prototype.slice(_warehouseLocation);
+  _warehouseLocation = Array.prototype.slice(_warehouseLocation); //FIXME slice the array well
+  if(_warehouse.length !== 2){
+    res.json({"status":"error", "message":"Invalid coordinates"});
+  }
   var loc = {
     type: "Point",
     coordinates: _warehouseLocation
@@ -71,6 +72,11 @@ router.post('/', function(req, res, next){
     }
     res.json({"status": "success", "message": "Succesfully added warehouse"});
   });
+});
+
+router.get('/search/:loc', function(req, res, next){
+  //Invoked when search by location occurs
+  res.send("Working on it.");
 })
 
 
