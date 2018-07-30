@@ -1,4 +1,5 @@
 ## Main API structure documentation
+ 
 This file describes the structure of the provided API, their usage, caveats and other information.
 Mostly, the files in here just provide different API end point to clients and they can access it from any RESTful compliant client.
 *notes*   
