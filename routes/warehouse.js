@@ -38,12 +38,12 @@ mongoose.connect(db_uri, db_options)
 
 var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
 
-var warehouse = mongoose.model('warehouse', warehouseSchema);
+var Warehouse = mongoose.model('warehouse', warehouseSchema);
 
 //APIs
 //GET a list of all warehouses
 router.get('/', function(req, res, next){
-  var _warehouse = warehouse.find({});
+  var _warehouse = Warehouse.find({});
   _warehouse.then(function(warehouse){
     res.json(JSON.stringify(warehouse));
   })
@@ -56,8 +56,21 @@ router.get('/', function(req, res, next){
 router.post('/', function(req, res, next){
   var warehouseForm = req.body;
   //Assume warehouse has the appropriate data FIXME
-  console.log(warehouseForm);
-  res.json({"status": "success", "message": "Warehouse added."});
+  var _warehouseLocation = warehouseForm.location; //long, lat array
+  //Array.prototype.slice()
+  _warehouseLocation = Array.prototype.slice(_warehouseLocation);
+  var loc = {
+    type: "Point",
+    coordinates: _warehouseLocation
+  }
+  var warehouse = new Warehouse(loc);
+  warehouse.save(function(err, wh){
+    if(err){
+      console.error("Error adding warehouse.");
+      res.json({"status":"error", "message":"Error adding warehouse"});
+    }
+    res.json({"status": "success", "message": "Succesfully added warehouse"});
+  });
 })
 
 
