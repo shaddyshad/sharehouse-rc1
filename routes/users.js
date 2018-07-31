@@ -49,8 +49,54 @@ router.post('/', function(req, res, next){
 	});
 })
 
+function sanitize_username(username){
+	var nameReg = new RegExp(/([A-Za-z]){4,10}$/);
+	return (username.match(nameReg) !== null);
+}
+
+function sanitize_email(email){
+	mail = new RegExp(/[A-Za-z._]+@[A-Za-z]+\.[A-Za-z]{3,}$/);
+	return(email.match(mailReg) !== null);
+}
+
+function verify_password(pwd1, pwd2){
+	//Will improve with hashing, but right now, act as a stub for a raw password
+	return pwd1 == pwd2;
+}
+
+//Login functionality
+router.post('/login', function(req, res, next){
+	// console.log("Login");
+	var login_form = req.body;
+	if(!login_form){
+		res.json({"status":"error", "message":"Could not login"});
+	}
+	if(login_form.username === undefined || login_form.password === undefined){
+		res.json({"status":"error", "message":"Empty username or password"});
+	}
+	// console.log("Searching for user", login_form.password);
+	if(sanitize_username(login_form.username)){
+		// console.log("Sanitized");
+		Users.findOne({username: login_form.username}).then(function(user){
+			if(verify_password(user.password, login_form.password)){
+				//Authenticated user
+				res.send("Authenticated");
+
+			}else{
+				res.send(`Unauthenticated ${login_form.password}, ${_user.password}`);
+			}
+		}).catch(function(err){
+			console.error(err);
+			res.json({"status":"error", "message": "Invalid username/password combination."});
+		})
+	}else{
+		//malicious data?
+		res.json({"status":"error", "message": "Invalid username"});
+	}
+})
+
 /*GET a specific user*/
-router.get('/:username', function(req, res, next){
+router.get('/retrieve/', function(req, res, next){
 	var _username = req.params.username;
 	if(!_username){
 		res.json({"status":"error", "message":"No supplied argument"});
