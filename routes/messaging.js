@@ -12,7 +12,8 @@ var _schema = {
   from: {type: Schema.Types.ObjectId, ref: 'users'},
   to: {type: Schema.Types.ObjectId, ref: 'users' },
   subject: String,
-  message: String
+  message: String,
+  read: Boolean
 }
 
 var Messages = mongoose.model('messages', new Schema(_schema));
@@ -60,10 +61,55 @@ function retrieve_sentbox(user){
   });
 }
 
+//send a message
+function send_message(to, from, subject, message){
+  if(!(to && from && subject && message)){
+    return false;
+  }
+  //general validation
+  if(typeof to === 'string'){
+    Users.findOne({_id: to}).then(function(_to){
+      var message = new Messages({
+        to: _to,
+        from: from,
+        subject: subject,
+        message: message,
+        read: false
+      });
+      message.save().then(function(succ){return true;}).catch(function(err){throw err;});
+    })
+  }
+
+  var message = new Messages({
+    to: to,
+    from: from,
+    subject: subject,
+    message: message,
+    read: false
+  });
+  message.save().then(function(succ){return true;}).catch(function(err){throw err;});
+}
+
+function retrieve_all_unread(user){
+  //retrieve all unread messages, for a user object
+  //restrict user to being user object
+  if(!user){
+    return false;
+  }
+  var query = Messages.find({read: false});
+  query.then(function(records){
+    return records;
+  }).catch(function(err){throw err;});
+}
+
+
 var router = express.Router();
 
 var test_support = {
-  retrieve_inbox
+  retrieve_inbox,
+  send_message,
+  retrieve_sentbox,
+  retrieve_all_unread
 }
 
 exports.messagingRouter = router;
