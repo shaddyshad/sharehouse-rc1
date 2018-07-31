@@ -4,20 +4,21 @@ After deleting the old polluted sharehouse environment, I divided the project in
 I have been thinking about doing it in django, since am lil bit more familiar than express, but it is going to be a good learning experience.
 
 [toc]: https://github.com/shaddyshad/sharehouse-rc1.git
+[md]: https://github.com/shaddyshad/sharehouse-rc1.git/README.md
 ## [Table of Contents][toc]
-+ [Conventions][]
-  - [API Conventions][]
-  - [Code conventions][]
-+ [Project Structure][]
-+ [Project Infrastructure][]
-+ [File structure][]
-+ [Contributing][]
-+ [Changelog][]
++ Conventions
+  - [API Conventions][md#API]
+  - [Code conventions][md#CODE]
++ Project Structure
++ [Project Infrastructure][md]
++ File structure
++ Contributing
++ [Changelog][md]
 
 
-### [Conventions][]
+### Conventions
 
-#### [API Conventions][]
+#### [API Conventions][md#API]
 
 The API's that are mostly found in [this][./routes] root, adopt a different convention that would be very important to talk about.
 
@@ -32,14 +33,14 @@ Since the API is fully a backend API, exposing just the API to be called by a cl
 This means that, once a client makes a call to an API they should check the resulting payload and act accordingly.
 But when they request for data, the json payload sent back is different, as it contains the actual results of the call. This can be anything like a list of all warehouses, e.t.c.
 
-#### [Code Conventions][]
+#### [Code Conventions][md#CODE]
 
 Sections marked with *__FIXME__* indicate sections that need attention before the build is done. These are mostly internal or private function that have been used without being defined, or somewhere a mistake has been intentionally introduced, so as to not block the code flow.
 
 Sections marked with *__TODO__*  indicate sections that will need revisiting in future. This include minor features that were ignored to save time for major features.
 They include things like ignored error checking and handling, or trivial things like testing.
 
-### [Project Structure][]
+### [Project Structure]()
 
 The project is divided into two logical segments:
 
