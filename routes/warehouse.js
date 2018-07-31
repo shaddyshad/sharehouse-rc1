@@ -19,6 +19,9 @@ mongoose.connection = connection;
      coordinates:[]
    },
    name: {'$type': String},
+   size: Number,
+   price_per_sqm: Number,
+   empty_size: Number
  }
 
 var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
@@ -54,23 +57,37 @@ router.post('/', function(req, res, next){
   //TODO add authorization checks
 
   var warehouseForm = req.body;
+  console.log(warehouseForm);
   //Assume warehouse has the appropriate data FIXME
   //Look for location key in the form
-  if(!warehouse.hasOwnProperty('location')){ //FIXME implement has_key
-    res.json({"status":"error", "message":"Expected location"});
-  }
+  // if(!warehouseForm.hasOwnProperty('location')){ //FIXME implement has_key
+  //   res.json({"status":"error", "message":"Expected location"});
+  // }
   var _warehouseLocation = warehouseForm.location; //ignore all other fields
   let sep = has_sep_comma(_warehouseLocation) ? "," : " "; //check the separator in the parameter
   //Array.prototype.slice()
   _warehouseLocation = normalizeLocation(_warehouseLocation, sep);
-  if(_warehouse.length !== 2){
+  if(_warehouseLocation.length !== 2){
     res.json({"status":"error", "message":"Invalid coordinates"});
   }
   var loc = {
     type: "Point",
     coordinates: _warehouseLocation
   }
-  var warehouse = new Warehouse(loc);
+  //Process the other fiels
+  var size = warehouseForm.size;
+  var empty = warehouseForm.empty;
+  var ppsqm = warehouseForm.price;
+  var name = warehouseForm.name;
+
+  var _schema = {
+    location: loc,
+    name: name,
+    size: size,
+    empty_size: empty,
+    price_per_sqm: ppsqm
+  };
+  var warehouse = new Warehouse(_schema);
   warehouse.save(function(err, wh){
     if(err){
       console.error("Error adding warehouse.");
