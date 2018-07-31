@@ -188,7 +188,8 @@ router.get("/retrieve/:id", function(req, res, next){
     console.error("Get Details: ", err);
     res.json({"status": "error", "message": "Error retrieving record"});
   });
-})
+});
+
 
 
 exports.warehouseRouter = router;
