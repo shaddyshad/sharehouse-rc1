@@ -96,7 +96,7 @@ router.post('/login', function(req, res, next){
 })
 
 /*GET a specific user*/
-router.get('/retrieve/', function(req, res, next){
+router.get('/:username', function(req, res, next){
 	var _username = req.params.username;
 	if(!_username){
 		res.json({"status":"error", "message":"No supplied argument"});
