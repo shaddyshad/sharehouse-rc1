@@ -44,7 +44,7 @@ router.get('/', function(req, res, next){
   //Restrict to !user.user_type and redirect to dashboard if user.user_type
   var _warehouse = Warehouse.find({});
   _warehouse.then(function(warehouse){
-    res.json(JSON.stringify(warehouse));
+    res.json(warehouse);
   })
   .catch(function(_err){
     console.error("Error getting warehouse ", _err);
@@ -79,6 +79,10 @@ router.post('/', function(req, res, next){
   var empty = warehouseForm.empty;
   var ppsqm = warehouseForm.price;
   var name = warehouseForm.name;
+
+  if(empty > size){
+    res.json({"status":"error", "message":"Invalid empty size"});
+  }
 
   var _schema = {
     location: loc,
@@ -144,8 +148,8 @@ function normalizeLocation(loc, sep){
 //     });
 // }
 
-router.get("/search", function(req, res, next){
-  let loc = String(req.query.location);
+router.get("/search/:location", function(req, res, next){
+  let loc = String(req.params.location);
   const allowed_range = 500000; //5 km
   //prepare the location
   var sep = has_sep_comma(loc) ? ",":" ";
@@ -162,7 +166,7 @@ router.get("/search", function(req, res, next){
       maxDistance: allowed_range,
       spherical: true
     }).then(function(records){
-      res.json(JSON.stringify(records));
+      res.json(records);
     }).catch(function(err){
       throw err;
       res.sendStatus(300);
@@ -171,14 +175,14 @@ router.get("/search", function(req, res, next){
 });
 
 //GET details about a single warehouse
-router.get("/retrieve/", function(req, res, next){
-  var id = req.query.id;
+router.get("/retrieve/:id", function(req, res, next){
+  var id = req.params.id;
   if(!id){
     res.json({"status": "error", "message": "Cannot find the ID"});
   }
   Warehouse.find({_id: id}).then(
     function(warehouse){
-      res.json(JSON.stringify(warehouse));
+      res.json(warehouse);
     }
   ).catch(function(err){
     console.error("Get Details: ", err);
@@ -187,5 +191,6 @@ router.get("/retrieve/", function(req, res, next){
 })
 
 
-
-module.exports = router;
+exports.warehouseRouter = router;
+exports.Warehouse = Warehouse;
+// module.exports = router;
