@@ -11,7 +11,7 @@ mongoose.connection = connection;
 let Schema = mongoose.Schema;
 
 var _schema = {
-  warehouse: Schema.Types.ObjectId,
+  warehouse: {type: Schema.Types.ObjectId, ref: 'entries'},
   bill: Number,
   starting: Date,
   end: Date,
@@ -207,6 +207,15 @@ router.post('/:id', function(req, res, next){
     //res.json({"status": "error", "message":"An error occured booking. Please retry"});
   }
   res.json(bill);
-})
+});
 
-module.exports = router;
+//support exports
+var support = {
+  post_booking,
+  compute_bill,
+  Bookings
+}
+
+exports.bookingRouter = router;
+exports.support = support;
+// module.exports = router;
