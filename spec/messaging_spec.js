@@ -94,4 +94,76 @@ describe("Messaging test suite", function(){
       throw err;
     });
   });
+
+  //Message sending
+  it("Sends a message", function(){
+    var user =new Users({
+      username: "test_user",
+      password: "test_pwd",
+      userType: 0 //whoever
+    });
+
+    var dep = new Users({
+      username: "test_sender",
+      password: "test_password",
+      userType: 1 //whoever the f
+    });
+
+    user.save().then(function(_user){
+      dep.save().then(function(_dep){
+        var text = "Test message";
+        var sbj = "Test subject";
+        var msg = test_support.send_message(_user, _dep, sbj, text);
+        expect(msg).not.toBe(false);
+        expect(msg).toBe(true);
+      });
+    });
+
+  });
+
+  //Get all unsend
+  it("Retrieves only unread messages", function(){
+      var user =new Users({
+        username: "test_user",
+        password: "test_pwd",
+        userType: 0 //whoever
+      });
+
+      var dep = new Users({
+        username: "test_sender",
+        password: "test_password",
+        userType: 1 //whoever the f
+      })
+      user.save().then(function(_user){
+        //Create a few messages
+        dep.save().then(function(_dep){
+          var in1 = Messages({
+            from: _user,
+            to: _dep,
+            subject: "A test subject",
+            message: "Test message",
+            read: false
+          });
+
+          var in2 = Messages({
+            from: _user,
+            to: _dep,
+            subject: "Test subject 2",
+            message: "Test message 2",
+            read: true
+          });
+
+          in1.save().then(function(_msg){
+            in2.save().then(function(_msg){
+              //fetch them
+              var messages = test_support.retrieve_all_unread(_dep);
+              expect(messages).not.toBe(false);
+              expect(messages.length).toBe(1);
+            })
+          })
+        });
+      }).catch(function(err){
+        throw err;
+      });
+  });
 });
