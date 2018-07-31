@@ -1,5 +1,5 @@
 ## Main API structure documentation
- 
+
 This file describes the structure of the provided API, their usage, caveats and other information.
 Mostly, the files in here just provide different API end point to clients and they can access it from any RESTful compliant client.
 *notes*   
@@ -8,6 +8,16 @@ Something important to know is the protocol used by the services provided here.
 - `error`. Error messages are communicated to the client in form of response status, with a message to indicate what is happening.
 - `success` - Some success messages may include data, which is directly sent over JSON to the client, but some operations, like `insert`, where really, at a minimum level, the client is only interested in finding out if everything went well, or a problem was encountered, are also comminicated via `JSON statuses`.   
 This is a standard I adapted just for the MVP, maybe after a few iterations, we'll get better.
+
+[root]: https://github.com/shaddyshad/sharehouse-rc1.git/routes/routes.md
+
+### [Files][root]
++ booking.js - Description of API found at `/warehouses/booking` responsible for processing booking
++ database.js - Common API used in establishing communication with the DB
++ index.js - Main root API rooted at `/`, has really no business logic associated.
++ [routes.md][root] - This file
++ users.js - Description of User related API's found at `/users` responsible for user processing functionalities
++ warehouse.js - Description of Warehouse related APIs and business logic rooted at `/warehouses`, responsible for processing warehouse
 
 ### Files    
 *`users.js`*
