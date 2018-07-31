@@ -57,8 +57,17 @@ function post_booking(booking){
     _autoComputed = true;
   }
 
+  if(!booking.warehouse){
+    return false;
+  }
+
   //process other fiels
-  let _booking = Bookings.create({bill: _bill, autoComputed: _autoComputed, period: _period});
+  let _booking = Bookings.create({
+    bill: _bill,
+    autoComputed: _autoComputed,
+    period: _period,
+    warehouse: booking.warehouse
+  });
 
   _booking.then(function(bill){
     return true;
@@ -86,7 +95,7 @@ function compute_bill(warehouse, period){
 
   //Get the ppsqm and compute the bill
   //FIXME stub to replace the warehouse
-  var price =  5;
+  var price =  warehouse.price_per_sqm;
   let ppsqm = parseFloat(price);
   if(Number.isNaN(ppsqm)){
     return false;
@@ -144,7 +153,7 @@ function get_storage_period(sp, ep){
 router.post('/:id', function(req, res, next){
   var booking = req.body;
   var id = req.params.id;
-  var warehouse;
+  // var warehouse;
   var period;
   var ep;
   var sp;
@@ -160,14 +169,7 @@ router.post('/:id', function(req, res, next){
   }
   console.log(id);
 
-  Warehouse.findOne({_id: id})
-    .then(function(_warehouse){
-      warehouse = _warehouse;
-    })
-    .catch(function(err){
-      console.error("Error booking - Not found: ", err);
-      res.json({"status":"error", "message":"Warehouse not found"});
-  });
+
   //warehouse may potentially be undefined... Do other ops in the hope that at completion it will be alright
   //Booking either specifies an end periof(ep) or a period (period) for time, find out which
   if('ep' in booking){
@@ -184,7 +186,7 @@ router.post('/:id', function(req, res, next){
     if(!ep){
       //could not compute the sp
       console.log("Could not compute the end period");
-      //res.json({"status":"error", "message":"Could not compute the end period"});
+      res.json({"status":"error", "message":"Could not compute the end period"});
     }
   }
 
@@ -193,18 +195,25 @@ router.post('/:id', function(req, res, next){
   if(!bill){
     //some problem
     console.log("Problem computing the bill");
-    //res.json({"status": "error", "message": "Problem computing the bill"});
+    res.json({"status": "error", "message": "Problem computing the bill"});
   }
 
   //Create a posting before posting it
   bill.starting = booking.sp;
   bill.ending = ep || booking.ep;
-  bill.warehouse = warehouse;
+  Warehouse.findOne({_id: id})
+    .then(function(_warehouse){
+      bill.warehouse = _warehouse;
+    })
+    .catch(function(err){
+      console.error("Error booking - Not found: ", err);
+      res.json({"status":"error", "message":"Warehouse not found"});
+  });
 
   if(!post_booking(bill)){
     //An error occured
     console.log("An error occured adding the booking");
-    //res.json({"status": "error", "message":"An error occured booking. Please retry"});
+    res.json({"status": "error", "message":"An error occured booking. Please retry"});
   }
   res.json(bill);
 });
@@ -213,7 +222,8 @@ router.post('/:id', function(req, res, next){
 var support = {
   post_booking,
   compute_bill,
-  Bookings
+  Bookings,
+  get_storage_period
 }
 
 exports.bookingRouter = router;
