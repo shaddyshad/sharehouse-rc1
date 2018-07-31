@@ -18,7 +18,7 @@ mongoose.connection = connection;
      type: String,
      coordinates:[]
    },
-   name: {'$type': String}
+   name: {'$type': String},
  }
 
 var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
@@ -152,6 +152,22 @@ router.get("/search", function(req, res, next){
     });
 
 });
+
+//GET details about a single warehouse
+router.get("/retrieve/", function(req, res, next){
+  var id = req.query.id;
+  if(!id){
+    res.json({"status": "error", "message": "Cannot find the ID"});
+  }
+  Warehouse.find({_id: id}).then(
+    function(warehouse){
+      res.json(JSON.stringify(warehouse));
+    }
+  ).catch(function(err){
+    console.error("Get Details: ", err);
+    res.json({"status": "error", "message": "Error retrieving record"});
+  });
+})
 
 
 
