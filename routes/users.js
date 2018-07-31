@@ -113,5 +113,6 @@ router.get('/:username', function(req, res, next){
 
 
 
-
-module.exports = router;
+exports.usersRouter = router;
+exports.Users = Users;
+// module.exports = router;
