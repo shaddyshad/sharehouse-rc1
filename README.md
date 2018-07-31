@@ -7,8 +7,8 @@ I have been thinking about doing it in django, since am lil bit more familiar th
 [md]: https://github.com/shaddyshad/sharehouse-rc1.git/README.md
 ## [Table of Contents][toc]
 + Conventions
-  - [API Conventions][md#API]
-  - [Code conventions][md#CODE]
+  - [API Conventions][md]
+  - [Code conventions][md]
 + Project Structure
 + [Project Infrastructure][md]
 + File structure
@@ -18,7 +18,7 @@ I have been thinking about doing it in django, since am lil bit more familiar th
 
 ### Conventions
 
-#### [API Conventions][md#API]
+#### [API Conventions][md]
 
 The API's that are mostly found in [this][./routes] root, adopt a different convention that would be very important to talk about.
 
@@ -33,7 +33,7 @@ Since the API is fully a backend API, exposing just the API to be called by a cl
 This means that, once a client makes a call to an API they should check the resulting payload and act accordingly.
 But when they request for data, the json payload sent back is different, as it contains the actual results of the call. This can be anything like a list of all warehouses, e.t.c.
 
-#### [Code Conventions][md#CODE]
+#### [Code Conventions][md]
 
 Sections marked with *__FIXME__* indicate sections that need attention before the build is done. These are mostly internal or private function that have been used without being defined, or somewhere a mistake has been intentionally introduced, so as to not block the code flow.
 
