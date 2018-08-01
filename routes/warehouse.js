@@ -10,7 +10,7 @@ mongoose.connection = connection;
  var _schemaOptions = {
    typeKey: '$type',
    // timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
-   collection: 'entries'
+   // collection: 'entries'
  }
 
  var _schema = {
@@ -33,7 +33,7 @@ var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
 
 
 //Compiled model
-var Warehouse = mongoose.model('entries', warehouseSchema);
+var Warehouse = mongoose.model(process.env.DEV_WAREHOUSE_COLLECTION, warehouseSchema);
 
 
 
@@ -188,7 +188,8 @@ router.get("/retrieve/:id", function(req, res, next){
     console.error("Get Details: ", err);
     res.json({"status": "error", "message": "Error retrieving record"});
   });
-})
+});
+
 
 
 exports.warehouseRouter = router;

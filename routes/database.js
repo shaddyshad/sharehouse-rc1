@@ -2,8 +2,14 @@ var mongoose = require('mongoose');
 
 console.log("Setting up connection to the DB...");
 var db;
-// var db_uri = "mongodb://sharehouse:Share1nsecurePWD@ds257851.mlab.com:57851/sharehouse";
-var db_uri = "mongodb://localhost:27017/geo";
+var db_uri;
+// var db_uri = "mongodb://localhost:27017/geo";
+if(process.env.DEBUG){  //use a db based on environment
+  db_uri = "mongodb://localhost:27017/geo";
+}else{
+  db_uri = "mongodb://sharehouse:Share1nsecurePWD@ds257851.mlab.com:57851/sharehouse";
+}
+
 var db_options = {
   useNewUrlParser: true
 }
