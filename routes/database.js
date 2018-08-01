@@ -3,11 +3,14 @@ var mongoose = require('mongoose');
 console.log("Setting up connection to the DB...");
 var db;
 var db_uri;
-// var db_uri = "mongodb://localhost:27017/geo";
 if(process.env.DEBUG){  //use a db based on environment
   db_uri = "mongodb://localhost:27017/geo";
 }else{
-  db_uri = "mongodb://sharehouse:Share1nsecurePWD@ds257851.mlab.com:57851/sharehouse";
+  var _user = process.env.DB_USER;
+  var _pasword = process.env.DB_PWD;
+  var _host = process.env.DB_HOST;
+  var _db = 'sharehouse';
+  db_uri = `mongodb://${_user}:${_pasword}@${_host}/${_db}`;
 }
 
 var db_options = {
