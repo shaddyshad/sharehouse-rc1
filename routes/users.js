@@ -61,6 +61,7 @@ function sanitize_email(email){
 
 function verify_password(pwd1, pwd2){
 	//Will improve with hashing, but right now, act as a stub for a raw password
+	//FIXME remove stub
 	return pwd1 == pwd2;
 }
 
@@ -80,6 +81,9 @@ router.post('/login', function(req, res, next){
 		Users.findOne({username: login_form.username}).then(function(user){
 			if(verify_password(user.password, login_form.password)){
 				//Authenticated user
+				//Save a session with the user.id as key
+				var sess_id = user._id;
+				res.cookie(sess_id, {httpOnly: true});
 				res.send("Authenticated");
 
 			}else{
