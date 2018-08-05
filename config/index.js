@@ -2,9 +2,8 @@
 
 var config = {};
 
-config.redisStore = {
-    url: process.env.REDIS_STORE_URI,
-    secret: process.env.REDIS_STORE_SECRET
+config.session = {
+    secret: process.env.STORE_SECRET
 };
 
 module.exports = config;
