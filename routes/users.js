@@ -13,14 +13,17 @@ mongoose.connection = connection;
 
 /* GET a list of all users. */
 router.get('/', function(req, res, next) {
-	Users.find({})
-	.then(function(users){
-        res.send(users);
-	})
-	.catch(function(err){
-				console.error(err);
-				res.json({"status": "404", "message": "Error fetching users."})
-	});
+	if(req.isAuthenticated()){
+	    //Show the index page
+        const user = req.user;
+        Warehouse.find({operator: user}).then(function(list){
+            res.render('dashboard', {warehouses: list, user: user})
+        }).catch(function (err) {
+            throw err;
+        });
+    }else{
+        res.send("An error occured.");
+    }
 });
 
 /*POST a user to the database*/
@@ -57,11 +60,21 @@ router.post('/', function(req, res, next){
 router.post('/login', function (req, res, next) {
     passport.authenticate('local', (err, user, info) => {
         if(err) console.error(err);
+
         req.login(user, (err) => {
             if(err){
                 res.send("Not aauthenticated \n");
-            }else
-                return res.send('You were authenticated & logged in!\n');
+            }else{
+                Warehouse.find({operator: user}).then(function (wh_list) {
+                    res.render('dashboard', {
+                        warehouses: wh_list,
+                        user: user
+                    });
+                }).catch(function (err) {
+                    console.error(err);
+                    res.send("An error occured");
+                })
+            }
         });
     })(req, res, next);
 });
@@ -75,36 +88,19 @@ router.get('/register', function (req, res) {
 	res.render('register');
 });
 
-
-/*GET a specific user*/
-router.get('get/:username', function(req, res, next){
-    let _username = req.params.username;
-    if(!_username){
-		res.json({"status":"error", "message":"No supplied argument"});
-	}
-	Users.findOne({username: _username}, function(err, user){
-		if(err){
-			console.log("Error get username: ", err);
-			res.json({"status":"error", "message":"No record found"});
-		}
-        const _user = JSON.stringify(user);
-        res.json(_user);
-	});
-});
-
+//Dashboard
 router.get('/dashboard', function (req, res) {
-    res.render('dashboard', {warehouses: [
-            {
-                name: "WH Operators",
-                location: "Tema",
-                area: 1800,
-                price: 5,
-                free: 1200,
-                _id: 1123432432
-            }
-        ]});
+    if(req.isAuthenticated()){
+        const user = req.user;
+        Warehouse.find({operator: user}).then(function(list){
+            res.render('dashboard', {warehouses: list, user: user})
+        }).catch(function (err) {
+            throw err;
+        });
+    }else{
+        res.send("An error occured.");
+    }
 });
-
 
 
 exports.usersRouter = router;
