@@ -53,7 +53,7 @@
                         <div class="ui list">
                             <div class="item"><a href="#">Notifications</a></div>
                             <div class="item"><a href="/users/change/password">Change password</a></div>
-                            <div class="item"><a href="/users/logout">Logout</a></div>
+                            <div class="item"><a href="/logout">Logout</a></div>
                         </div>
                     </div>
                 </div>
@@ -69,11 +69,10 @@
                     </div>
                     <div class="six wide column">
                         <div class="ui list">
-                            <div class="item">Company Name</div>
-                            <div class="item">Company Location</div>
+                            <div class="item"><%= user.username %></div>
                             <ol>
-                                <div class="item">Warehouse Manager</div>
-                                <div class="item">Warehouse Manager Contact</div>
+                                <div class="item"><%= user.user_type%></div>
+                                <div class="item"><%= user.email %></div>
                             </ol>
 
 
@@ -99,8 +98,9 @@
                 <div class="ui two column centered grid">
                     <div class="column">Warehouse details</div>
                 </div>
+
                 <div class="ui segment raised">
-                    <% if(warehouses){ %>
+                    <% if(warehouses.length){ %>
                     <% for(var i = 0; i < warehouses.length; ++i){ %>
                     <a href="/warehouses/listings/id/<%= warehouses[i]._id %>">
                         <div class="ui grid">
@@ -118,7 +118,7 @@
                                             <% warehouses[i].location %>
                                         </div>
                                         <div class="item"><strong>Area: </strong> <%= warehouses[i].area %> sqm</div>
-                                        <div class="item"><strong>Empty space: </strong> <%= warehouses[i].free %> sqm
+                                        <div class="item"><strong>Empty space: </strong> <%= warehouses[i].empty %> sqm
                                         </div>
                                         <div class="item"><strong>Price: </strong> $ <%= warehouses[i].price %>/sqm/mo
                                         </div>
@@ -128,7 +128,9 @@
                         </div>
                     </a>
                     <% } %>
-                    <% } %>
+                    <% } else{%>
+                    <p>No warehouse yet. Click <a href="/warehouses/add"> Add</a> to get started.</p>
+                    <%}%>
 
                 </div>
                 <div class="ui right aligned grid">
@@ -146,7 +148,7 @@
         <div class="ui center aligned container">
             <div class="ui stackable grid">
                 <div class="three wide column">
-                    <h4 class="ui header">Companu</h4>
+                    <h4 class="ui header">Company</h4>
                     <div class="ui link list">
                         <a class="item" href="" target="_blank">About</a>
                         <a class="item" href="" target="_blank">Contact</a>
