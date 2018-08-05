@@ -11,7 +11,7 @@ mongoose.connection = connection;
    typeKey: '$type',
    // timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
    // collection: 'entries'
- }
+ };
 
  var _schema = {
    location :{
@@ -22,7 +22,7 @@ mongoose.connection = connection;
    size: Number,
    price_per_sqm: Number,
    empty_size: Number
- }
+ };
 
 var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
 /*Including distance in the query select fields using a virtual field.
@@ -169,7 +169,6 @@ router.get("/search/:location", function(req, res, next){
       res.json(records);
     }).catch(function(err){
       throw err;
-      res.sendStatus(300);
     });
 
 });
@@ -188,6 +187,11 @@ router.get("/retrieve/:id", function(req, res, next){
     console.error("Get Details: ", err);
     res.json({"status": "error", "message": "Error retrieving record"});
   });
+});
+
+//Warehouse manager
+router.get('/manage', function(req, res){
+
 });
 
 
