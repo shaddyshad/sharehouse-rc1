@@ -21,7 +21,7 @@
                     Register for an account
                 </div>
             </h2>
-            <form action="/users/register" method="post" class="ui large form">
+            <form action="/users/" method="post" class="ui large form">
                 <div class="ui stacked secondary  segment">
                     <div class="field">
                         <div class="ui left icon input">
@@ -49,6 +49,20 @@
                         </div>
 
                     </div>
+                    <div class="field">
+                        <select class="ui fluid dropdown" name="type">
+                            <option value="">Account Type</option>
+                            <option value="operator">Operator</option>
+                            <option value="depositor">Depositor</option>
+                        </select>
+
+                    </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" tabindex="0" class="hidden" name="terms">
+                            <label>I agree to the <a>Terms and Conditions</a></label>
+                        </div>
+                    </div>
                     <div class="ui fluid large teal submit button">Register</div>
                 </div>
 
@@ -64,7 +78,11 @@
 
     <!-- scripts -->
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.js"></script>
-    <script src="/javascripts/login.js"></script>
+    <script src="/javascripts/register.js"></script>
+    <script type="text/javascript">
+        $('select.ui.fluid.dropdown').dropdown();
+        $('.ui.checkbox').checkbox();
+    </script>
 
     </body>
     </html>
