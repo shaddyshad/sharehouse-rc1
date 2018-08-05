@@ -11,8 +11,8 @@ router.get('/', function(req, res) {
   res.render('login', { user: {name: "Shad"} });
 });
 
-router.get('/another', function(req, res){
-  res.render('search');
+router.get('/register', function(req, res){
+  res.render('register');
 });
 
 
