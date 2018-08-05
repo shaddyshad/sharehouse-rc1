@@ -1,0 +1,57 @@
+<!--suppress HtmlUnknownTarget -->
+<DOCTYPE html="">
+    <html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="initial-scale=1.0"/>
+        <title> Sharehouse: Home</title>
+        <!-- meta tags -->
+
+        <!-- style files -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css">
+        <%- include('styles') %>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    </head>
+    <body id="body">
+    <div class="ui middle aligned center aligned grid" style="height: 100%;">
+        <div class="column " style="width: 45%;">
+            <h2 class="ui image header" style="margin-top: -100px">
+                <div class="content">
+                    Log-in to your account
+                </div>
+            </h2>
+            <form action="/users/login" method="post" class="ui large form">
+                <div class="ui stacked secondary  segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="email" placeholder="E-mail address">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="ui fluid large teal submit button">Login</div>
+                </div>
+
+                <div class="ui error message"></div>
+
+            </form>
+
+            <div class="ui message">
+                New to us? <a href="/users/new">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.js"></script>
+    <script src="javascripts/login.js"></script>
+
+    </body>
+    </html>
+
