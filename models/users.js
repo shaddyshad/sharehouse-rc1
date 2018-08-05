@@ -11,6 +11,7 @@ var userSchemaOptions = {
 
 var _schema = {
     username: String,
+    email: String,
     password: String,
     user_type: Boolean, //0 for depositor, 1 for operator
 };
