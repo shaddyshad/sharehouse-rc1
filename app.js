@@ -1,24 +1,55 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+let logger = require('morgan');
 const passport = require('passport');
+const flash = require('connect-flash');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+const bcrypt = require('bcrypt');
+const Users = require('./models/users');
+
 
 require('dotenv').config();
+const config = require('./config');
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 var {usersRouter} = require('./routes/users');
 var {warehouseRouter} = require('./routes/warehouse');
 var {bookingRouter} = require('./routes/booking');
 
 
-var app = express();
+const app = express();
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+require('./authentication').init(app);
+
+app.use(session({
+    secret: config.session.secret,
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore()
+}));
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, cb) {
+    console.log("Inside serialize user code - with user ", user);
+    cb(null, user._id)
+});
+
+passport.deserializeUser(function (username, cb) {
+    findUser(username, cb)
+});
+
 
 
 app.use(logger('dev'));
@@ -27,11 +58,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-require('./authentication').init(app);
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
