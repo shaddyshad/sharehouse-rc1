@@ -8,7 +8,7 @@ router.get('/dummy', function(req, res){
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { user: {name: "Shad"} });
+  res.render('login', { user: {name: "Shad"} });
 });
 
 router.get('/another', function(req, res){
