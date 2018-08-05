@@ -1,8 +1,9 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var connection = require('./database.js');
+const express = require('express');
+const mongoose = require('mongoose');
+const connection = require('./database.js');
+const uuid = require('uuid/v4');
 
-var router = express.Router();
+const router = express.Router();
 
 //Database setup
 mongoose.connection = connection;
@@ -14,9 +15,10 @@ var {Warehouse} = require('../models');
 router.get('/', function(req, res, next){
   //TODO add authorization checks
   //Restrict to !user.user_type and redirect to dashboard if user.user_type
-  var _warehouse = Warehouse.find({});
-  _warehouse.then(function(warehouse){
-    res.json(warehouse);
+    const _warehouse = Warehouse.find({});
+    _warehouse.then(function(warehouse){
+    // res.json(warehouse);
+        res.send(`Id: ${req.sessionID}`)
   })
   .catch(function(_err){
     console.error("Error getting warehouse ", _err);
@@ -25,52 +27,24 @@ router.get('/', function(req, res, next){
 });
 
 
-router.post('/', function(req, res, next){
-  //TODO add authorization checks
+router.post('/', function(req, res){
+  console.log(req.body);
+    const wh = {
+        location: req.body.location,
+        name: req.body.name,
+        area: req.body.area,
+        empty: req.body.empty,
+        price: req.body.price,
 
-  var warehouseForm = req.body;
-  console.log(warehouseForm);
-  //Assume warehouse has the appropriate data FIXME
-  //Look for location key in the form
-  // if(!warehouseForm.hasOwnProperty('location')){ //FIXME implement has_key
-  //   res.json({"status":"error", "message":"Expected location"});
-  // }
-  var _warehouseLocation = warehouseForm.location; //ignore all other fields
-  let sep = has_sep_comma(_warehouseLocation) ? "," : " "; //check the separator in the parameter
-  //Array.prototype.slice()
-  _warehouseLocation = normalizeLocation(_warehouseLocation, sep);
-  if(_warehouseLocation.length !== 2){
-    res.json({"status":"error", "message":"Invalid coordinates"});
-  }
-  var loc = {
-    type: "Point",
-    coordinates: _warehouseLocation
-  };
-  //Process the other fiels
-  var size = warehouseForm.size;
-  var empty = warehouseForm.empty;
-  var ppsqm = warehouseForm.price;
-  var name = warehouseForm.name;
-
-  if(empty > size){
-    res.json({"status":"error", "message":"Invalid empty size"});
-  }
-
-  var _schema = {
-    location: loc,
-    name: name,
-    size: size,
-    empty_size: empty,
-    price_per_sqm: ppsqm
-  };
-  var warehouse = new Warehouse(_schema);
-  warehouse.save(function(err, wh){
-    if(err){
-      console.error("Error adding warehouse.");
-      res.json({"status":"error", "message":"Error adding warehouse"});
-    }
-    res.json({"status": "success", "message": "Succesfully added warehouse"});
-  });
+    };
+    const warehouse = Warehouse.create(wh);
+    warehouse.then(function(wh){
+      res.send("Added succesfully");
+    })
+        .catch(function(err){
+          console.error(err);
+          res.send("An error occured");
+        });
 });
 
 //Determine what type of separator that the location data has
@@ -124,13 +98,13 @@ router.get("/search/:location", function(req, res, next){
   let loc = String(req.params.location);
   const allowed_range = 500000; //5 km
   //prepare the location
-  var sep = has_sep_comma(loc) ? ",":" ";
-  var _loc = normalizeLocation(loc, sep);
-  var _compareLoc = {
-    type: "Point",
-    coordinates: _loc
-  };
-  // console.log("BIIIIIIIG ",_compareLoc);
+    const sep = has_sep_comma(loc) ? "," : " ";
+    const _loc = normalizeLocation(loc, sep);
+    const _compareLoc = {
+        type: "Point",
+        coordinates: _loc
+    };
+    // console.log("BIIIIIIIG ",_compareLoc);
   Warehouse.find()
     .where('location')
     .near({
@@ -147,8 +121,8 @@ router.get("/search/:location", function(req, res, next){
 
 //GET details about a single warehouse
 router.get("/retrieve/:id", function(req, res, next){
-  var id = req.params.id;
-  if(!id){
+    let id = req.params.id;
+    if(!id){
     res.json({"status": "error", "message": "Cannot find the ID"});
   }
   Warehouse.find({_id: id}).then(
@@ -161,11 +135,17 @@ router.get("/retrieve/:id", function(req, res, next){
   });
 });
 
-//Warehouse manager
-router.get('/manage', function(req, res){
-
+router.get('/listings/id/:id', function (req, res) {
+    res.render('listing');
 });
 
+router.get('/listings', function (req, res) {
+    res.render('listing');
+});
+
+router.get('/add', function (req, res) {
+   res.render('add_warehouse');
+});
 
 
 exports.warehouseRouter = router;
