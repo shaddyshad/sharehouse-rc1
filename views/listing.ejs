@@ -57,15 +57,19 @@
                             </div>
                         </div>
                         <div class="six wide column">
+                            <%if(warehouse){%>
                             <div class="ui list">
                                 <div class="item"><strong>WH Name</strong></div>
                                 <ol>
-                                    <div class="item"><strong>Location: </strong>warehouses[i].location</div>
-                                    <div class="item"><strong>Area: </strong> 20sqm</div>
-                                    <div class="item"><strong>Empty space: </strong> 10 sqm</div>
-                                    <div class="item"><strong>Price: </strong> $ 5/sqm/mo</div>
+                                    <div class="item"><strong>Location: </strong><%= warehouse.name%></div>
+                                    <div class="item"><strong>Area: </strong> <%=warehouse.area %></div>
+                                    <div class="item"><strong>Empty space: </strong> <%= warehouse.empty %></div>
+                                    <div class="item"><strong>Price: </strong> $ <%= warehouse.price %>/sqm/mo</div>
                                 </ol>
                             </div>
+                            <%}else{%>
+                            <p>No warehouse yet. Click <a href="/warehouses/add"> Add</a> to get started.</p>
+                            <%}%>
                         </div>
                     </div>
                 </div>
