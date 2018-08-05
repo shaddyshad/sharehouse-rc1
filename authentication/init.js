@@ -3,42 +3,21 @@ const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 
 const authenticationMiddleware = require('./middleware');
+const {Users} = require('../models');
 
-const Users = require('../models');
-
-function findUser (username, callback) {
-    Users.findOne({username: username})
-        .then(function(user){
-            return callback(null, user)
-        }).catch(function (err){
-            return callback(null);
-        });
-}
-
-passport.serializeUser(function (user, cb) {
-    cb(null, user.username)
-});
-
-passport.deserializeUser(function (username, cb) {
-    findUser(username, cb)
-});
 
 function initPassport () {
+    // configure passport.js to use the local strategy
     passport.use(new LocalStrategy(
-        (username, password, done) => {
-            findUser(username, (err, user) => {
-                if (err) {
-                    return done(err)
-                }
-
-                // User not found
+        { usernameField: 'email' },
+        (email, password, done) => {
+            Users.findOne({email: email}).then(function(user){
                 if (!user) {
                     console.log('User not found');
                     return done(null, false)
                 }
 
-                // Always use hashed passwords and fixed time comparison
-                bcrypt.compare(password, user.passwordHash, (err, isValid) => {
+                bcrypt.compare(password, user.password, (err, isValid) => {
                     if (err) {
                         return done(err)
                     }
@@ -47,7 +26,9 @@ function initPassport () {
                     }
                     return done(null, user)
                 })
-            })
+            }).catch(function (err) {
+               return done(err);
+            });
         }
     ));
 
