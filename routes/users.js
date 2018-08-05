@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const querystring = require('querystring');
 
 const connection = require('./database.js');
 var {Users, Warehouse} = require('../models');
@@ -17,7 +18,11 @@ router.get('/', function(req, res, next) {
 	    //Show the index page
         const user = req.user;
         Warehouse.find({operator: user}).then(function(list){
-            res.render('dashboard', {warehouses: list, user: user})
+            const query = querystring.stringify({
+                "warehouses": list,
+                "user": user
+            });
+            res.redirect( req.baseUrl + '/dashboard');
         }).catch(function (err) {
             throw err;
         });
@@ -49,10 +54,10 @@ router.post('/', function(req, res, next){
 
     _user.then(function(user){
     	//send mail confirmation
-		res.redirect('/users/login')
+		res.redirect(req.baseUrl + '/login')
 	}).catch(function(err){
 		console.error(err);
-		res.redirect('register');
+		res.redirect(req.baseUrl + '/register');
 	});
 });
 
@@ -66,10 +71,7 @@ router.post('/login', function (req, res, next) {
                 res.send("Not aauthenticated \n");
             }else{
                 Warehouse.find({operator: user}).then(function (wh_list) {
-                    res.render('dashboard', {
-                        warehouses: wh_list,
-                        user: user
-                    });
+                    res.redirect('dashboard');
                 }).catch(function (err) {
                     console.error(err);
                     res.send("An error occured");
