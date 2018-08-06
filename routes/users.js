@@ -14,21 +14,7 @@ mongoose.connection = connection;
 
 /* GET a list of all users. */
 router.get('/', function(req, res, next) {
-	if(req.isAuthenticated()){
-	    //Show the index page
-        const user = req.user;
-        Warehouse.find({operator: user}).then(function(list){
-            const query = querystring.stringify({
-                "warehouses": list,
-                "user": user
-            });
-            res.redirect( req.baseUrl + '/dashboard');
-        }).catch(function (err) {
-            throw err;
-        });
-    }else{
-        res.send("An error occured.");
-    }
+    req.isAuthenticated() ? res.redirect(req.baseUrl + '/dashboard') : res.redirect('/error');
 });
 
 /*POST a user to the database*/
@@ -67,22 +53,13 @@ router.post('/login', function (req, res, next) {
         if(err) console.error(err);
 
         req.login(user, (err) => {
-            if(err){
-                res.send("Not aauthenticated \n");
-            }else{
-                Warehouse.find({operator: user}).then(function (wh_list) {
-                    res.redirect('dashboard');
-                }).catch(function (err) {
-                    console.error(err);
-                    res.send("An error occured");
-                })
-            }
+            err ? res.send("Not authenticated. ") : res.redirect(req.baseUrl + '/dashboard');
         });
     })(req, res, next);
 });
 
 router.get('/login', function (req, res) {
-	res.render('login');
+    req.isAuthenticated() ? res.redirect(req.baseUrl + '/dashboard') : res.render('login');
 });
 
 //Register functionality
@@ -97,10 +74,28 @@ router.get('/dashboard', function (req, res) {
         Warehouse.find({operator: user}).then(function(list){
             res.render('dashboard', {warehouses: list, user: user})
         }).catch(function (err) {
-            throw err;
+            res.send("Error");
+            console.log(err);
         });
     }else{
-        res.send("An error occured.");
+        //Not authenticated, just login
+        res.render('dashboard', {
+            warehouses: [
+                {
+                    name: "TemaWHQ2",
+                    location: "Tema",
+                    empty: 220,
+                    area: 2500,
+                    price: 6,
+                }
+            ],
+            user: {
+                username: "Tema warehouse operators",
+                email: "temahq@email.com",
+                user_type: "Warehose operator"
+
+            }
+        })
     }
 });
 
