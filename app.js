@@ -6,18 +6,12 @@ let logger = require('morgan');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
-const FileStore = require('session-file-store')(session);
+const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose');
+
+
 const Users = require('./models/users');
-
-
 require('dotenv').config();
-const config = require('./config');
-
-const indexRouter = require('./routes/index');
-var {usersRouter} = require('./routes/users');
-var {warehouseRouter} = require('./routes/warehouse');
-var {bookingRouter} = require('./routes/booking');
-
 
 const app = express();
 
@@ -30,15 +24,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+mongoose.connect('mongodb://localhost:27017/sharehouse', {useNewUrlParser: true});
 require('./authentication').init(app);
+require('./models');
+
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
 
 app.use(session({
-    secret: config.session.secret,
+    secret: "letmepass",
     resave: false,
-    saveUninitialized: false,
-    store: new FileStore()
+    saveUninitialized: true,
+    store: new MongoStore({mongooseConnection: db})
 }));
 
+const indexRouter = require('./routes/index');
+const warehouseRouter = require('./routes/warehouse');
+const usersRouter = require('./routes/users');
+const bookingRouter = require('./routes/booking');
 
 
 app.use(passport.initialize());
@@ -60,8 +63,8 @@ passport.deserializeUser(function (id, cb) {
 app.use(flash());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/warehouses', warehouseRouter);
+app.use('/users', usersRouter);
 app.use('/bookings', bookingRouter);
 
 // catch 404 and forward to error handler
