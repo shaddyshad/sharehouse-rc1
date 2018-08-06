@@ -1,10 +1,8 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
-var connection = require('./database');
-var {Users} = require('./users');
+var Users = mongoose.model('users');
 
-mongoose.connection = connection;
 var Schema = mongoose.Schema;
 
 //setup
@@ -14,7 +12,7 @@ var _schema = {
   subject: String,
   message: String,
   read: Boolean
-}
+};
 
 var Messages = mongoose.model('messages', new Schema(_schema));
 
@@ -31,7 +29,7 @@ function retrieve_inbox(user){
       return records;
     }).catch(function(err){throw err;});
 
-  }else if(typeof user == 'string'){
+  }else if(typeof user === 'string'){
     //fetch from db
     var _query = Users.findOne({_id: user});
     _query.then(function(_user){
@@ -62,29 +60,16 @@ function retrieve_sentbox(user){
 }
 
 //send a message
-function send_message(to, from, subject, message){
-  if(!(to && from && subject && message)){
+function send_message(to, from, subject, msg){
+  if(!(to && from && subject && msg)){
     return false;
-  }
-  //general validation
-  if(typeof to === 'string'){
-    Users.findOne({_id: to}).then(function(_to){
-      var message = new Messages({
-        to: _to,
-        from: from,
-        subject: subject,
-        message: message,
-        read: false
-      });
-      message.save().then(function(succ){return true;}).catch(function(err){throw err;});
-    })
   }
 
   var message = new Messages({
     to: to,
     from: from,
     subject: subject,
-    message: message,
+    message: msg,
     read: false
   });
   message.save().then(function(succ){return true;}).catch(function(err){throw err;});
@@ -110,7 +95,7 @@ var test_support = {
   send_message,
   retrieve_sentbox,
   retrieve_all_unread
-}
+};
 
-exports.messagingRouter = router;
-exports.Messages = Messages;
+module.exports = router;
+
