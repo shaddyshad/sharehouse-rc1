@@ -1,9 +1,5 @@
 var mongoose = require('mongoose');
 
-var connection = require('../routes/database.js');
-
-mongoose.connection = connection;
-
 var userSchemaOptions = {
     collection: "users",
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'},

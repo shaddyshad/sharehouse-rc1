@@ -1,9 +1,7 @@
 var mongoose = require('mongoose');
-var connection = require('../routes/database.js');
-
-mongoose.connection = connection;
 
 var _schemaOptions = {
+    collections: "warehouses",
     timestamps: {createdAt: 'created_at', updatedAt: 'updated_at'},
 };
 var _schema = {
@@ -14,7 +12,7 @@ var _schema = {
     price: Number,
     operator: {type: mongoose.Schema.Types.ObjectId}
 };
-var warehouseSchema = new mongoose.Schema(_schema, _schemaOptions);
-var Warehouse = mongoose.model(process.env.DEV_WAREHOUSE_COLLECTION, warehouseSchema);
+var warehouseSchema = mongoose.Schema(_schema, _schemaOptions);
+var Warehouses = mongoose.model('warehouses', warehouseSchema);
 
-module.exports = Warehouse;
+module.exports = Warehouses;
