@@ -2,12 +2,10 @@ var express = require('express');
 var mongoose = require('mongoose');
 var moment = require('moment');
 
-var connection = require('./database');
-var {Warehouse} = require('./warehouse');
+var Warehouse = mongoose.model('warehouses');
 
 var router = express.Router();
 
-mongoose.connection = connection;
 let Schema = mongoose.Schema;
 
 var _schema = {
@@ -218,14 +216,5 @@ router.post('/:id', function(req, res, next){
   res.json(bill);
 });
 
-//support exports
-var support = {
-  post_booking,
-  compute_bill,
-  Bookings,
-  get_storage_period
-}
 
-exports.bookingRouter = router;
-exports.support = support;
-// module.exports = router;
+module.exports = router;
