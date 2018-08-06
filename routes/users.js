@@ -2,15 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const querystring = require('querystring');
-
-const connection = require('./database.js');
-var {Users, Warehouse} = require('../models');
-
 
 const router = express.Router();
+let Users = mongoose.model('users');
+let Warehouses = mongoose.model('warehouses');
 
-mongoose.connection = connection;
 
 /* GET a list of all users. */
 router.get('/', function(req, res, next) {
@@ -71,7 +67,7 @@ router.get('/register', function (req, res) {
 router.get('/dashboard', function (req, res) {
     if(req.isAuthenticated()){
         const user = req.user;
-        Warehouse.find({operator: user}).then(function(list){
+        Warehouses.find({operator: user}).then(function(list){
             res.render('dashboard', {warehouses: list, user: user})
         }).catch(function (err) {
             res.send("Error");
@@ -99,7 +95,4 @@ router.get('/dashboard', function (req, res) {
     }
 });
 
-
-exports.usersRouter = router;
-exports.Users = Users;
-// module.exports = router;
+module.exports = router;
