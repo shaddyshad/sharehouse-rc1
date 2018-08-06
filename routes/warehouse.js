@@ -1,17 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const connection = require('./database.js');
-const uuid = require('uuid/v4');
-
 const router = express.Router();
 
-//Database setup
-mongoose.connection = connection;
-
-var {Warehouse} = require('../models');
+var Warehouses = mongoose.model('warehouses');
 
 //APIs
-//GET a list of all warehouses
+//GET a list of all Warehouses
 router.get('/', function(req, res, next){
   req.isAuthenticated() ? res.redirect('/users/dashboard') : res.redirect('/');
 });
@@ -28,8 +22,8 @@ router.post('/', function(req, res){
         operator: req.user,
 
     };
-    const warehouse = Warehouse.create(wh);
-    warehouse.then(function(wh){
+    const Warehouses = Warehouses.create(wh);
+    Warehouses.then(function(wh){
       res.send("Added succesfully");
     })
         .catch(function(err){
@@ -42,20 +36,20 @@ router.get('/listings/id/:id', function (req, res) {
     const id = req.params.id;
     console.log(id);
 
-    Warehouse.findOne({_id: id}).then(function (wh) {
-        res.render('listing', {warehouse: wh});
+    Warehouses.findOne({_id: id}).then(function (wh) {
+        res.render('listing', {Warehouses: wh});
     }).catch(function (err) {
         throw err;
     });
 });
 
 router.get('/add', function (req, res) {
-   res.render('add_warehouse');
+   res.render('add_Warehouses');
 });
 
 router.get('/manage', function(req, res){
     res.render('listing', {
-        warehouse: {
+        Warehouses: {
             name: "TemaWHQ2",
             location: "Tema",
             empty: 220,
@@ -78,8 +72,8 @@ router.get('/store', function(req, res){
             }
 
     })
-})
+});
 
 
-exports.warehouseRouter = router;
-// module.exports = router;
+// exports.WarehousesRouter = router;
+module.exports = router;
