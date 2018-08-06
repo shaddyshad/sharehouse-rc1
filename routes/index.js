@@ -19,7 +19,7 @@ router.get('/logout', function(req, res){
 
 router.get('/error', function (req, res) {
     res.render('permission')
-})
+});
 
 
 module.exports = router;
