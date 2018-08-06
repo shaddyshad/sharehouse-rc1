@@ -39,8 +39,8 @@
                 <div class="content">
                     <div class="ui list">
                         <div class="item"><a href="/users/dashboard">My Profile</a></div>
-                        <div class="item"><a class="#">Manage</a></div>
-                        <div class="item"><a>In Storage</a></div>
+                        <div class="item"><a class="/warehouse/manage">Manage</a></div>
+                        <div class="item"><a href="/warehouses/store">In Storage</a></div>
                         <div class="item"><a>Messages</a></div>
                     </div>
                 </div>
@@ -53,15 +53,15 @@
                     <div class="ui grid">
                         <div class="four wide column">
                             <div class="ui image">
-                                <img class="ui medium image" src="/images/amazonWH.png" alt="Warehouse">
+                                <img class="ui medium image" src="/images/wh.png" alt="Warehouse">
                             </div>
                         </div>
                         <div class="six wide column">
                             <%if(warehouse){%>
                             <div class="ui list">
-                                <div class="item"><strong>WH Name</strong></div>
+                                <div class="item"><strong><% warehouse.name %></strong></div>
                                 <ol>
-                                    <div class="item"><strong>Location: </strong><%= warehouse.name%></div>
+                                    <div class="item"><strong>Location: </strong><%= warehouse.location%></div>
                                     <div class="item"><strong>Area: </strong> <%=warehouse.area %></div>
                                     <div class="item"><strong>Empty space: </strong> <%= warehouse.empty %></div>
                                     <div class="item"><strong>Price: </strong> $ <%= warehouse.price %>/sqm/mo</div>
