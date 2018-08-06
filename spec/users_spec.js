@@ -1,8 +1,6 @@
-var express = require('express');
 var mongoose = require('mongoose');
 
-var connection = require('../routes/database');
-var {Users} = require('../routes/users');
+var Users = mongoose.model('users');
 
 describe("User test suite", function(){
   it("Stores cookie in a response", function(){
