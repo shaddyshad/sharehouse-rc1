@@ -38,34 +38,47 @@ router.post('/', function(req, res){
         });
 });
 
-//GET details about a single warehouse
-router.get("/listings/id/:id", function(req, res, next){
-    let id = req.params.id;
-    if(!id){
-    res.json({"status": "error", "message": "Cannot find the ID"});
-  }
+router.get('/listings/id/:id', function (req, res) {
+    const id = req.params.id;
+    console.log(id);
 
-
-  Warehouse.findOne({_id: id}).then(
-    function(wh){
-        console.log("We have the warehouses now.");
-      res.render('listing',{warehouse: wh});
-    }
-  ).catch(function(err){
-    console.error("Get Details: ", err);
-    res.json({"status": "error", "message": "Error retrieving record"});
-  });
-});
-
-
-
-router.get('/listings', function (req, res) {
-    res.render('listing');
+    Warehouse.findOne({_id: id}).then(function (wh) {
+        res.render('listing', {warehouse: wh});
+    }).catch(function (err) {
+        throw err;
+    });
 });
 
 router.get('/add', function (req, res) {
    res.render('add_warehouse');
 });
+
+router.get('/manage', function(req, res){
+    res.render('listing', {
+        warehouse: {
+            name: "TemaWHQ2",
+            location: "Tema",
+            empty: 220,
+            area: 2500,
+            price: 6,
+        }
+    })
+});
+
+router.get('/store', function(req, res){
+    res.render('storage', {
+        any:
+            {
+                name: "Mr Kamau",
+                start: "3rd Aug 2018",
+                end: "5th Sept 2018",
+                goods: "Electronics",
+                notes: "Handle with care. Delicate goods",
+                rent: 30
+            }
+
+    })
+})
 
 
 exports.warehouseRouter = router;
