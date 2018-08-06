@@ -9,4 +9,4 @@ describe("User test suite", function(){
     //Authenticate a user, simulate a request with the user and check that cookies are saved
     
   })
-})
+});
