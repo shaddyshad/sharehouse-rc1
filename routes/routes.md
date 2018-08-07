@@ -26,21 +26,11 @@ This is a standard I adapted just for the MVP, maybe after a few iterations, we'
 For most listing services, they can be accessed via a `GET` request to the endpoint, but still requires to be a validated request. The system uses a very simple state machine to determine if a request is authenticated and authorized to access the data, and if not, returns an error message.
 
 #### API endpoints
-*get('/users')*   
-__parameters__
-* (<None>)[]
+__POST('/users/)__ 
 
-__Returns__
-* [users] - A json compliant users objects is returned, potentially null, containing all the users currently in the DB.   
+Register an operator or a depositor to the application. 
 
-Returns a list of all users.  
-
-When no user exist in the DB, the API returns an empty JSON object, else, returns a list of valid `User` instances.
-
-__Errors__   
-
-This API might fail due to connection errors, as such, the API depends on the built in Promise object to handle the errors. If an error happens, the API returns a json document with the status set to `error` and the appropriate `error message` set.
-
+This endpoint depends on the existence of a validated `req.body` property.
 
 *`warehouse.js`*
 
