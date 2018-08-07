@@ -89,3 +89,10 @@ function onListening() {
   debug('Listening on ' + bind);
   console.log("Listening on "+ bind);
 }
+
+
+//
+process.on('exit', function () {
+    //close the server
+    server.close();
+});
