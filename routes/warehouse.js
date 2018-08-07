@@ -44,7 +44,7 @@ router.get('/listings/id/:id', function (req, res) {
 });
 
 router.get('/add', function (req, res) {
-   res.render('add_Warehouses');
+   res.render('add_warehouse');
 });
 
 router.get('/manage', function(req, res){
