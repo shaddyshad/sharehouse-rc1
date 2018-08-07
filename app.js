@@ -12,6 +12,26 @@ const mongoose = require('mongoose');
 
 const Users = require('./models/users');
 require('dotenv').config();
+//configure hot reloading
+const production = process.env.NODE_ENV === 'production';
+if(!production){
+    const chokidar = require('chokidar');
+    const dirs = ['./routes', './public', './views'];
+    var watcher = chokidar.watch(dirs);
+
+    watcher.on('ready', function () {
+        watcher.on('all', function () {
+            dirs.forEach(function (dir) {
+                console.log("Clearing "+ dir + " contents.");
+                Object.keys(require.cache).forEach(function (key) {
+                    if(RegExp(dir).test(key)) delete  require.cache[key];
+                })
+            })
+        })
+    })
+}
+
+
 
 const app = express();
 
@@ -84,5 +104,7 @@ app.use(function(err, req, res) {
 });
 
 //exports.app = app;
+
+
 
 module.exports = app;
