@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c802024e-7679-4d7e-872b-0c62f41a9cc3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -49,9 +48,9 @@
         <counts>
           <entry key="css" value="4" />
           <entry key="ejs" value="56" />
-          <entry key="env" value="1" />
+          <entry key="env" value="2" />
           <entry key="gitignore" value="3" />
-          <entry key="js" value="52" />
+          <entry key="js" value="53" />
           <entry key="json" value="5" />
           <entry key="md" value="2" />
           <entry key="scss" value="12" />
@@ -61,12 +60,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key=".env file" value="1" />
+          <entry key=".env file" value="2" />
           <entry key="CSS" value="4" />
           <entry key="EJS" value="54" />
           <entry key="Git file" value="3" />
           <entry key="JSON" value="5" />
-          <entry key="JavaScript" value="55" />
+          <entry key="JavaScript" value="56" />
           <entry key="Markdown" value="2" />
           <entry key="PLAIN_TEXT" value="2" />
           <entry key="SCSS" value="12" />
@@ -77,7 +76,8 @@
         <counts>
           <entry key="css" value="4" />
           <entry key="ejs" value="2244" />
-          <entry key="js" value="4723" />
+          <entry key="env" value="12" />
+          <entry key="js" value="4796" />
           <entry key="json" value="3" />
           <entry key="scss" value="161" />
           <entry key="www" value="123" />
@@ -85,10 +85,11 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+          <entry key=".env file" value="12" />
           <entry key="CSS" value="4" />
           <entry key="EJS" value="2243" />
           <entry key="JSON" value="3" />
-          <entry key="JavaScript" value="4846" />
+          <entry key="JavaScript" value="4919" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="SCSS" value="161" />
         </counts>
@@ -97,24 +98,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/full-preview.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-792">
-              <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-              <folding>
-                <element signature="n#style#0;n#div#1;n#div#0;n#section#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#6992#6999#0#HTML" expanded="true" />
-                <element signature="n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#section#1;n#section#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#1;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#section#1;n#section#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#2;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#section#1;n#section#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#3;n#div#0;n#div#0;n#section#1;n#section#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#footer#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/operator-dashboard.ejs">
           <provider selected="true" editor-type-id="text-editor">
@@ -127,11 +110,32 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
               <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="455">
+              <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
+              <folding>
+                <element signature="e#1005#1143#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.env">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="84" selection-start-column="84" selection-end-column="84" />
             </state>
           </provider>
         </entry>
@@ -171,15 +175,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
               <caret line="67" column="28" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/operator-sidebar.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="49" selection-start-line="8" selection-start-column="49" selection-end-line="8" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -252,7 +247,6 @@
         <option value="$PROJECT_DIR$/spec/users_spec.js" />
         <option value="$PROJECT_DIR$/routes/messaging.js" />
         <option value="$PROJECT_DIR$/authentication/init.js" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/public/css/sh/flyout-toolbox.scss" />
         <option value="$PROJECT_DIR$/views/core-scripts.ejs" />
         <option value="$PROJECT_DIR$/models/users.js" />
@@ -278,6 +272,8 @@
         <option value="$PROJECT_DIR$/models/warehouses.js" />
         <option value="$PROJECT_DIR$/views/operator-dashboard.ejs" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -403,18 +399,18 @@
       <workItem from="1533581761807" duration="5148000" />
       <workItem from="1533589396336" duration="3084000" />
       <workItem from="1533592758861" duration="3338000" />
-      <workItem from="1533596700082" duration="51418000" />
+      <workItem from="1533596700082" duration="51818000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86551000" />
+    <option name="totallyTimeSpent" value="86951000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-6" width="1366" height="774" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49844238" visible="true" weight="0.21136364" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49844238" visible="true" weight="0.21136364" />
       <window_info id="Structure" order="1" sideWeight="0.50155765" side_tool="true" weight="0.16136363" />
       <window_info id="npm" order="2" sideWeight="0.50155765" side_tool="true" weight="0.16136363" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -428,7 +424,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.5903427" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.5903427" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="CSS-X-Fire" order="12" weight="0.32866043" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -447,9 +443,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/spec/router_spec.js" />
     <entry file="file://$PROJECT_DIR$/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -642,16 +635,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="68" column="27" lean-forward="true" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
-          <folding>
-            <element signature="e#1005#1143#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -807,6 +790,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="84" selection-start-column="84" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
+          <folding>
+            <element signature="e#1005#1143#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

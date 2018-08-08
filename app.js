@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-mongoose.connect('mongodb://localhost:27017/sharehouse', {useNewUrlParser: true});
+mongoose.connect(process.env.CONN_STRING, {useNewUrlParser: true});
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 require('./models');
