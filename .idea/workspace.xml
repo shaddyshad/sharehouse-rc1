@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c802024e-7679-4d7e-872b-0c62f41a9cc3" name="Default Changelist" comment="" />
+    <list default="true" id="c802024e-7679-4d7e-872b-0c62f41a9cc3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -49,7 +52,7 @@
           <entry key="env" value="1" />
           <entry key="gitignore" value="3" />
           <entry key="js" value="52" />
-          <entry key="json" value="4" />
+          <entry key="json" value="5" />
           <entry key="md" value="2" />
           <entry key="scss" value="12" />
           <entry key="svg" value="1" />
@@ -62,7 +65,7 @@
           <entry key="CSS" value="4" />
           <entry key="EJS" value="54" />
           <entry key="Git file" value="3" />
-          <entry key="JSON" value="4" />
+          <entry key="JSON" value="5" />
           <entry key="JavaScript" value="55" />
           <entry key="Markdown" value="2" />
           <entry key="PLAIN_TEXT" value="2" />
@@ -112,14 +115,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/operator-dashboard.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
+            <state relative-caret-position="144">
               <caret line="31" column="51" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
               <folding>
                 <element signature="n#section#1;n#section#1;n#div#0;n#body#0;n#html#0;n#!!top" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -252,7 +264,6 @@
         <option value="$PROJECT_DIR$/views/register.ejs" />
         <option value="$PROJECT_DIR$/public/css/sh/sharehouse.scss" />
         <option value="$PROJECT_DIR$/bin/www" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/views/options.ejs" />
         <option value="$PROJECT_DIR$/routes/users.js" />
         <option value="$PROJECT_DIR$/views/full-preview.ejs" />
@@ -266,6 +277,7 @@
         <option value="$PROJECT_DIR$/routes/warehouse.js" />
         <option value="$PROJECT_DIR$/models/warehouses.js" />
         <option value="$PROJECT_DIR$/views/operator-dashboard.ejs" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -391,17 +403,18 @@
       <workItem from="1533581761807" duration="5148000" />
       <workItem from="1533589396336" duration="3084000" />
       <workItem from="1533592758861" duration="3338000" />
-      <workItem from="1533596700082" duration="50788000" />
+      <workItem from="1533596700082" duration="51418000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85921000" />
+    <option name="totallyTimeSpent" value="86551000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-6" width="1366" height="774" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49844238" visible="true" weight="0.08409091" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49844238" visible="true" weight="0.21136364" />
       <window_info id="Structure" order="1" sideWeight="0.50155765" side_tool="true" weight="0.16136363" />
       <window_info id="npm" order="2" sideWeight="0.50155765" side_tool="true" weight="0.16136363" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -415,7 +428,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.6168224" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.5903427" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="CSS-X-Fire" order="12" weight="0.32866043" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -608,13 +621,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/home-nav.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="77">
@@ -789,11 +795,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/operator-dashboard.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
+        <state relative-caret-position="144">
           <caret line="31" column="51" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
           <folding>
             <element signature="n#section#1;n#section#1;n#div#0;n#body#0;n#html#0;n#!!top" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
         </state>
       </provider>
     </entry>
