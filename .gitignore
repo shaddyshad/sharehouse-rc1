@@ -72,7 +72,7 @@ typings/
 # Serverless directories
 .serverless
 
-./idea
+.idea/
 # development sessions
 /sessions
 
