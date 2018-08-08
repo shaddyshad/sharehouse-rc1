@@ -10,7 +10,13 @@ let Warehouses = mongoose.model('warehouses');
 
 /* GET a list of all users. */
 router.get('/', function(req, res, next) {
-    req.isAuthenticated() ? res.redirect(req.baseUrl + '/dashboard') : res.redirect('/error');
+    if(req.isAuthenticated()){
+        if(req.user.user_type === "operator"){
+            res.send("Operator");
+        }else{
+            res.send("Depositor");
+        }
+    } res.redirect("/error");
 });
 
 /*POST a user to the database*/
