@@ -6,17 +6,12 @@ let logger = require('morgan');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
-const FileStore = require('session-file-store')(session);
-const Users = require('./models/users');
+let mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 
 
 require('dotenv').config();
 const config = require('./config');
-
-const indexRouter = require('./routes/index');
-var {usersRouter} = require('./routes/users');
-var {warehouseRouter} = require('./routes/warehouse');
-var {bookingRouter} = require('./routes/booking');
 
 
 const app = express();
@@ -28,18 +23,27 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
+mongoose.connect('mongodb://localhost:27017/sharehouse', {useNewUrlParser: true});
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+require('./models');
 require('./authentication').init(app);
+
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
     secret: config.session.secret,
     resave: false,
-    saveUninitialized: false,
-    store: new FileStore()
+    saveUninitialized: true,
+    store: new MongoStore({mongooseConnection: db})
 }));
 
-
+const indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var warehouseRouter = require('./routes/warehouse');
+var bookingRouter = require('./routes/booking');
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -48,6 +52,7 @@ passport.serializeUser(function (user, cb) {
     cb(null, user._id)
 });
 
+let Users = mongoose.model('users');
 
 passport.deserializeUser(function (id, cb) {
     Users.findOne({_id: id}).then(function (user) {

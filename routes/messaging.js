@@ -1,10 +1,9 @@
 var express = require('express');
 var mongoose = require('mongoose');
 
-var connection = require('./database');
-var {Users} = require('./users');
 
-mongoose.connection = connection;
+var Users = mongoose.model('users');
+
 var Schema = mongoose.Schema;
 
 //setup
@@ -112,5 +111,5 @@ var test_support = {
   retrieve_all_unread
 }
 
-exports.messagingRouter = router;
-exports.Messages = Messages;
+//exports.messagingRouter = router;
+module.exports = router;

@@ -3,7 +3,7 @@
 var config = {};
 
 config.session = {
-    secret: process.env.STORE_SECRET
+    secret: "letmepass"
 };
 
 module.exports = config;

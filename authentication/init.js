@@ -1,9 +1,10 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
+let mongoose = require('mongoose');
 
 const authenticationMiddleware = require('./middleware');
-const {Users} = require('../models');
+const Users = mongoose.model('users');
 
 
 function initPassport () {

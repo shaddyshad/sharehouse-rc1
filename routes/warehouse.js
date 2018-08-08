@@ -1,14 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const connection = require('./database.js');
-const uuid = require('uuid/v4');
 
 const router = express.Router();
 
-//Database setup
-mongoose.connection = connection;
 
-var {Warehouse} = require('../models');
+var Warehouse = mongoose.model('warehouses');
 
 //APIs
 //GET a list of all warehouses
@@ -23,14 +19,19 @@ router.post('/', function(req, res){
         location: req.body.location,
         name: req.body.name,
         area: req.body.area,
-        empty: req.body.empty,
+        free_space: req.body.empty,
         price: req.body.price,
         operator: req.user,
 
     };
     const warehouse = Warehouse.create(wh);
     warehouse.then(function(wh){
-      res.send("Added succesfully");
+       Warehouse.find({operator : req.user}).then(function(warehouses){
+          res.render("operator-dashboard", {warehouses: warehouses, user: req.user});
+       }).catch(function(err){
+          throw err;
+       });
+
     })
         .catch(function(err){
           console.error(err);
@@ -78,8 +79,9 @@ router.get('/store', function(req, res){
             }
 
     })
-})
+});
 
 
-exports.warehouseRouter = router;
-// module.exports = router;
+
+//exports.warehouseRouter = router;
+ module.exports = router;
