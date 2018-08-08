@@ -1,4 +1,8 @@
+
 ## Main API structure documentation
+
+The business logic is implemented mostly encapsulated in the API files with a few other
+functionalities outside.
 
 This file describes the structure of the provided API, their usage, caveats and other information.
 Mostly, the files in here just provide different API end point to clients and they can access it from any RESTful compliant client.
@@ -26,13 +30,28 @@ This is a standard I adapted just for the MVP, maybe after a few iterations, we'
 For most listing services, they can be accessed via a `GET` request to the endpoint, but still requires to be a validated request. The system uses a very simple state machine to determine if a request is authenticated and authorized to access the data, and if not, returns an error message.
 
 #### API endpoints
-__POST('/users/)__ 
+[__POST('/users/)__ ]()
 
 Register an operator or a depositor to the application. 
 
 This endpoint depends on the existence of a validated `req.body` property.
 
-*`warehouse.js`*
+
+[__GET('/users/')__](./users/)
+
+Returns the currently logged in user or redirect to the login page to authenticate.
+
+Mainly, acts a redirect route for all user related jobs.
+
+[__POST('/users/login')__](./users/#login)
+
+Login a user. Basically, using a local strategy of `username` and `password`.
+
+[__POST('/users/register')__]()
+
+ALretnative route to register. `'/register` redirects here.
+
+### [warehouse.js]()
 
 Contains definitions for services relating to creation and manipulation of warehouse, listing, and all queries on the warehouse data store.
 
@@ -40,7 +59,7 @@ A warehouse is a central data object in sharehouse and the whole business is bui
 
 #### API endpoints
 
-*get('/warehouses')*
+*[get('/warehouses')]()*
 
 __parameters__
 
@@ -56,7 +75,7 @@ __Errors__
 
 Like all GET API's that get data from the database, database connection errors might affect the connection after which the client is notified with a json response with the error status code set and the appropriate error message set.
 
-*post('/warehouse')*
+*[post('/warehouse')]()*
 
 Add a warehouse to the Database. Mostly, done during signup, as most operators will upload their warehouses during that period.
 
@@ -81,13 +100,13 @@ __Returns__
 
 Casually, all the API's here return a json payload, the contents, which determine the context and the result of the output. In this case, it returns status messages indicating success or failures as convention.
 
-*get('/warehouses/')*
+*[get('/warehouses/')]()*
 
 Get a list of all warehouses.
 
 Because there exists a variant of this API in the dashboard API's, this API is mostly restricted to depositors.
 
-*get('/dashboard/warehouses')*
+*[get('/dashboard/warehouses')]()*
 
 Operator side implementation of `get('/warehouses/')`
 
